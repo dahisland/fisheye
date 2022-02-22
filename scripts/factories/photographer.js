@@ -14,6 +14,7 @@ function photographerFactory(data) {
     // Image photographer
     const img = document.createElement("img");
     img.setAttribute("src", picture);
+    img.setAttribute("alt", "Photo de " + name);
     // Name photographer
     const h2 = document.createElement("h2");
     h2.textContent = name;

@@ -9,7 +9,10 @@ function photographerFactory(data) {
     // Container link
     const linkPhotographer = document.createElement("a");
     linkPhotographer.setAttribute("href", "./photographer.html");
-    linkPhotographer.setAttribute("alt", "Aller vers la page de " + name);
+    linkPhotographer.setAttribute(
+      "aria-label",
+      "Aller vers la page de " + name
+    );
     linkPhotographer.classList.add("a_photographer");
     // Image photographer
     const img = document.createElement("img");

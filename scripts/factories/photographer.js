@@ -18,6 +18,8 @@ function photographerFactory(data) {
     // Name photographer
     const h2 = document.createElement("h2");
     h2.textContent = name;
+    // Container for text photographer
+    const div = document.createElement("div");
     // Localisation photographer
     const pLocalisation = document.createElement("p");
     pLocalisation.classList.add("p_localisation");
@@ -34,9 +36,10 @@ function photographerFactory(data) {
     article.appendChild(linkPhotographer);
     linkPhotographer.appendChild(img);
     linkPhotographer.appendChild(h2);
-    article.appendChild(pLocalisation);
-    article.appendChild(pTagline);
-    article.appendChild(pPrice);
+    article.appendChild(div);
+    div.appendChild(pLocalisation);
+    div.appendChild(pTagline);
+    div.appendChild(pPrice);
     return article;
   }
   return { name, picture, getUserCardDOM };

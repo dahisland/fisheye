@@ -1,8 +1,11 @@
 @import url("photographer.css");
 
+html {
+  font-size: 16px;
+}
 body {
   font-family: "DM Sans", sans-serif;
-  margin: 0 80px;
+  margin: 0 5%;
 }
 header {
   display: flex;
@@ -13,12 +16,16 @@ header {
 }
 h1 {
   color: #901c1c;
+  font-size: 2rem;
+  text-align: center;
 }
 p {
   margin: 5px 0px 2px 0px;
 }
 main {
   padding-bottom: 100px;
+  width: 100%;
+  margin-top: 40px;
 }
 
 a {
@@ -26,8 +33,6 @@ a {
 }
 .a_photographer {
   display: block;
-  padding: 20px;
-  padding-bottom: 0px;
   border: 1px solid transparent;
   border-radius: 20px;
   width: 100%;
@@ -40,24 +45,25 @@ a {
 }
 
 .photographer_section {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 70px;
-  margin-top: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   text-align: center;
 }
 
 .photographer_section article {
   justify-self: center;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
+  width: 30%;
+  margin-bottom: 40px;
 }
 
 .photographer_section article h2 {
   color: #d3573c;
-  font-size: 36px;
+  font-size: 2.2rem;
   font-weight: lighter;
   margin: 30px 10px 0px;
 }
@@ -72,17 +78,49 @@ a {
 .p_localisation {
   color: #d3573c;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 1rem;
   margin: 0;
   margin-top: 5px;
 }
 
 .p_tagline {
-  font-size: 11px;
+  font-size: 0.8rem;
   font-weight: bold;
 }
 
 .p_price {
-  font-size: 10px;
+  font-size: 0.7rem;
   font-weight: lighter;
+}
+
+@media screen and (max-width: 990px) {
+  html {
+    font-size: 20px;
+  }
+  h1 {
+    font-size: 1.6rem;
+  }
+  .photographer_section article {
+    width: 45%;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  html {
+    font-size: 22px;
+  }
+  header {
+    margin-top: 30px;
+    height: fit-content;
+    flex-direction: column;
+  }
+  .logo {
+    height: 60px;
+  }
+  h1 {
+    margin: 0;
+  }
+  .photographer_section article {
+    width: 100%;
+  }
 }

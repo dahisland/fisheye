@@ -7,9 +7,10 @@ function photographerFactory(data) {
     // Card container
     const article = document.createElement("article");
     // Container link
-    const link = document.createElement("a");
-    link.setAttribute("href", "./photographer.html");
-    link.setAttribute("alt", "Aller vers la page de " + name);
+    const linkPhotographer = document.createElement("a");
+    linkPhotographer.setAttribute("href", "./photographer.html");
+    linkPhotographer.setAttribute("alt", "Aller vers la page de " + name);
+    linkPhotographer.classList.add("a_photographer");
     // Image photographer
     const img = document.createElement("img");
     img.setAttribute("src", picture);
@@ -29,9 +30,9 @@ function photographerFactory(data) {
     pPrice.classList.add("p_price");
     pPrice.textContent = price + "€/jour";
     // appendChild
-    article.appendChild(link);
-    link.appendChild(img);
-    link.appendChild(h2);
+    article.appendChild(linkPhotographer);
+    linkPhotographer.appendChild(img);
+    linkPhotographer.appendChild(h2);
     article.appendChild(pLocalisation);
     article.appendChild(pTagline);
     article.appendChild(pPrice);

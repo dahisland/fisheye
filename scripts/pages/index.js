@@ -1,6 +1,6 @@
 function getPhotographers() {
   // test de fetch
-  fetch("../data/photographers.json")
+  fetch("data/photographers.json")
     .then(function (response) {
       response.json().then(function (json) {
         const photographers = json.photographers;
@@ -15,7 +15,7 @@ function getPhotographers() {
       });
     })
     .catch(function (error) {
-      photographersSection.innerHTML +=
+      main.innerHTML +=
         "<p>Erreur de chargement des données</p><p>" + error.message + "</p>";
     });
 }

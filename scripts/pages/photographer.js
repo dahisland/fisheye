@@ -2,7 +2,6 @@
 
 const urlParam = new URL(window.location.href);
 const idUrlParam = urlParam.searchParams.get("id");
-console.log(idUrlParam);
 function getProfile() {
   // test de fetch
   fetch("data/photographers.json")
@@ -11,7 +10,6 @@ function getProfile() {
         const photographers = json.photographers;
         photographers.forEach((photographer) => {
           const idProfile = photographer.id;
-          console.log(idProfile);
           if (idProfile == idUrlParam) {
             const photographerModel = profileFactory(photographer);
             photographerModel.getUserProfileDOM();

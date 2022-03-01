@@ -1,5 +1,5 @@
-function photographerFactory(data) {
-  const { name, portrait, city, country, tagline, price } = data;
+function cardsFactory(data) {
+  const { name, portrait, city, country, tagline, price, id } = data;
 
   const picture = `assets/photographers/${portrait}`;
 
@@ -8,7 +8,7 @@ function photographerFactory(data) {
     const article = document.createElement("article");
     // Container link
     const linkPhotographer = document.createElement("a");
-    linkPhotographer.setAttribute("href", "./photographer.html");
+    linkPhotographer.setAttribute("href", "./photographer.html?id=" + id);
     linkPhotographer.setAttribute(
       "aria-label",
       "Aller vers la page de " + name

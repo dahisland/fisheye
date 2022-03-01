@@ -7,10 +7,11 @@ function profileFactory(data) {
     const buttonContact = document.querySelector(".contact_button");
     const photographHeader = buttonContact.parentNode;
     //------------------------------- Profile container
-    const article = document.createElement("article");
+    const identityPhotographer = document.createElement("div");
+    identityPhotographer.classList.add("identity");
     // Name photographer
-    const h2 = document.createElement("h2");
-    h2.textContent = name;
+    const namePhotographer = document.createElement("h1");
+    namePhotographer.textContent = name;
     // Localisation photographer
     const pLocalisation = document.createElement("p");
     pLocalisation.classList.add("p_localisation");
@@ -20,16 +21,16 @@ function profileFactory(data) {
     pTagline.classList.add("p_tagline");
     pTagline.textContent = tagline;
     //----------------------------------------- IMAGE
-    const img = document.createElement("img");
-    img.setAttribute("src", picture);
-    img.setAttribute("alt", "Photo de " + name);
+    const imgPhotographer = document.createElement("img");
+    imgPhotographer.setAttribute("src", picture);
+    imgPhotographer.setAttribute("alt", "Photo de " + name);
     //
     // appendChild
-    photographHeader.insertBefore(article, buttonContact);
-    article.appendChild(h2);
-    article.appendChild(pLocalisation);
-    article.appendChild(pTagline);
-    photographHeader.appendChild(img);
+    photographHeader.insertBefore(identityPhotographer, buttonContact);
+    identityPhotographer.appendChild(namePhotographer);
+    identityPhotographer.appendChild(pLocalisation);
+    identityPhotographer.appendChild(pTagline);
+    photographHeader.appendChild(imgPhotographer);
     return photographHeader;
   }
   return { name, picture, getUserProfileDOM };

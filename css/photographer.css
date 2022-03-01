@@ -2,36 +2,32 @@
   display: none;
 }
 
+/* -------------- Section --------------- */
 .photograph-header {
   background-color: #fafafa;
   height: 250px;
-  margin: 0;
+  margin: 0 auto;
   padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.photograph-header article {
+/* Container for identity photographer */
+.identity {
   text-align: left;
-  max-width: 300px;
+  width: 40%;
 }
-.photograph-header article h2 {
+.identity h1 {
   color: #d3573c;
-  font-size: 2.2rem;
+  font-size: 2.6rem;
   font-weight: lighter;
   margin: 0;
 }
 
-.photograph-header img {
-  height: 200px;
-  width: 200px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
+/* Button contact */
 .contact_button {
-  font-size: 20px;
+  font-size: 1rem;
   font-weight: bold;
   color: white;
   padding: 11px;
@@ -42,6 +38,17 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+/* Image of photographer  */
+
+.photograph-header img {
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* -------------- Modale form  --------------- */
 
 .modal {
   border-radius: 5px;
@@ -95,4 +102,43 @@ form input {
   height: 68px;
   border: none;
   border-radius: 5px;
+}
+
+/* -------------- medias queries  --------------- */
+@media screen and (max-width: 990px) {
+  .identity h1 {
+    font-size: 2.1rem;
+  }
+  .contact_button {
+    font-size: 0.8rem;
+    padding: 5px;
+    width: 130px;
+    height: 50px;
+  }
+  .photograph-header img {
+    height: 170px;
+    width: 170px;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .photograph-header {
+    height: fit-content;
+    flex-direction: column;
+  }
+  .identity {
+    text-align: center;
+    width: 100%;
+  }
+  .identity h1 {
+    font-size: 2.2rem;
+  }
+  .contact_button {
+    margin: 50px 0px;
+    width: 150px;
+  }
+  .photograph-header img {
+    height: 220px;
+    width: 220px;
+  }
 }

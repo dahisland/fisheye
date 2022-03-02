@@ -108,6 +108,10 @@ figcaption p {
 figcaption p:nth-child(2) {
   color: black;
 }
+figcaption p span {
+  font-family: "Font Awesome 5 Free";
+  color: #901c1c;
+}
 
 /* -------------- Modale form  --------------- */
 

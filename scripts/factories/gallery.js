@@ -17,7 +17,7 @@ function galleryFactory(data) {
     titlePhoto.textContent = title;
     // Container for likes
     const likePhoto = document.createElement("p");
-    likePhoto.innerHTML = likes + ' <i class="fa-solid fa-heart"></i>';
+    likePhoto.innerHTML = likes + ' <span class="fa-solid fa-heart"></span>';
     // appendChild
     figure.appendChild(photo);
     figure.appendChild(figcaption);

@@ -1,7 +1,7 @@
 function profileFactory(data) {
   const { name, portrait, city, country, tagline } = data;
 
-  const picture = `assets/photographers/${portrait}`;
+  const picture = `./assets/photographers/${portrait}`;
 
   function getUserProfileDOM() {
     const buttonContact = document.querySelector(".contact_button");

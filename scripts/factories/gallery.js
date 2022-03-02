@@ -1,7 +1,7 @@
 function galleryFactory(data) {
   const { photographerId, image, title, likes } = data;
 
-  const mediaPhoto = `assets/images/${photographerId}/${image}`;
+  const mediaPhoto = `./assets/images/${photographerId}/${image}`;
 
   function getGalleryCardDOM() {
     // Card photo container

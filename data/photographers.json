@@ -55,7 +55,7 @@
       "portrait": "MarcelNikolic.jpg"
     }
   ],
-  "media": [
+  "medias": [
     {
       "id": 342550,
       "photographerId": 82,
@@ -115,6 +115,7 @@
       "photographerId": 82,
       "title": "Wooden sculpture of a horse",
       "video": "Art_Wooden_Horse_Sculpture.mp4",
+      "image": "Miniature_tracy_video.jpg",
       "likes": 24,
       "date": "2011-12-08",
       "price": 100
@@ -224,6 +225,7 @@
       "photographerId": 925,
       "title": "Cute puppy on sunset",
       "video": "Animals_Puppiness.mp4",
+      "image": "Miniature_rhode_video.jpg",
       "likes": 52,
       "date": "2016-06-12",
       "price": 70
@@ -233,6 +235,7 @@
       "photographerId": 527,
       "title": "Rocky mountains from the air",
       "video": "Travel_Rock_Mountains.mp4",
+      "image": "Miniature_nabeel_video.jpg",
       "likes": 23,
       "date": "2017-03-18",
       "price": 45
@@ -387,6 +390,7 @@
       "photographerId": 243,
       "title": "Wild horses in the mountains",
       "video": "Animals_Wild_Horses_in_the_mountains.mp4",
+      "image": "Miniature_mimi_video.jpg",
       "likes": 142,
       "date": "2019-08-23",
       "price": 60
@@ -478,6 +482,7 @@
       "photographerId": 195,
       "title": "Drone shot of Buenos Aires highways",
       "video": "Architecture_coverr_circle_empty_highway_in_buenos_aires_587740985637.mp4",
+      "image": "Miniature_marcel_video.jpg",
       "likes": 57,
       "date": "2020-01-20",
       "price": 65
@@ -494,8 +499,9 @@
     {
       "id": 952343423,
       "photographerId": 930,
-      "title": "Tricks in te air",
+      "title": "Tricks in the air",
       "video": "Sport_Tricks_in_the_air.mp4",
+      "image": "Miniature_ellie_video.jpg",
       "likes": 150,
       "date": "2018-02-30",
       "price": 70

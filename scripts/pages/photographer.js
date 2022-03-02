@@ -8,11 +8,21 @@ function getProfile() {
     .then(function (response) {
       response.json().then(function (json) {
         const photographers = json.photographers;
+        const medias = json.medias;
+        const galleryContainer = document.querySelector(".gallery-cards");
         photographers.forEach((photographer) => {
           const idProfile = photographer.id;
           if (idProfile == idUrlParam) {
             const photographerModel = profileFactory(photographer);
             photographerModel.getUserProfileDOM();
+          }
+        });
+        medias.forEach((media) => {
+          const idPhotoMedias = media.photographerId;
+          if (idUrlParam == idPhotoMedias) {
+            const mediaModel = galleryFactory(media);
+            const galleryCardsDOM = mediaModel.getGalleryCardDOM();
+            galleryContainer.appendChild(galleryCardsDOM);
           }
         });
       });

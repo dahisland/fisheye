@@ -10,6 +10,12 @@
       href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap"
       rel="stylesheet"
     />
+    <!-- SCRIPT FONT AWESOME -->
+    <script
+      src="https://kit.fontawesome.com/e2e7cc2238.js"
+      crossorigin="anonymous"
+    ></script>
+
     <title>Fisheye - photographe</title>
   </head>
   <body>
@@ -23,6 +29,17 @@
         <button class="contact_button" onclick="displayModal()">
           Contactez-moi
         </button>
+      </section>
+      <section class="photograph-gallery">
+        <form class="gallery-sorting">
+          <label for="sorting-label">Trier par :</label>
+          <select name="tri" id="sorting-label" size="1">
+            <option value="popularite">Popularité</option>
+            <option value="date">Date</option>
+            <option value="titre">Titre</option>
+          </select>
+        </form>
+        <div class="gallery-cards"></div>
       </section>
     </main>
     <div id="contact_modal">
@@ -46,6 +63,7 @@
     </div>
     <script src="./scripts/utils/contactForm.js"></script>
     <script src="./scripts/factories/profile.js"></script>
+    <script src="./scripts/factories/gallery.js"></script>
     <script src="./scripts/pages/photographer.js"></script>
   </body>
 </html>

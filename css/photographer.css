@@ -108,7 +108,7 @@ figcaption p {
 figcaption p:nth-child(2) {
   cursor: pointer;
 }
-figcaption p span {
+figcaption p span:nth-child(2) {
   font-family: "Font Awesome 5 Free";
 }
 

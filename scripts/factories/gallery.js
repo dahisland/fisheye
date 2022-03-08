@@ -17,8 +17,11 @@ function galleryFactory(data) {
     titlePhoto.textContent = title;
     // Container for likes
     const likePhoto = document.createElement("p");
+    likePhoto.classList.add("number-likes");
     likePhoto.innerHTML =
-      likes + ' <span class="fas fa-heart" aria-label="likes"></span>';
+      "<span>" +
+      likes +
+      ' </span><span class="fas fa-heart" aria-label="likes"></span>';
     // appendChild
     figure.appendChild(photo);
     figure.appendChild(figcaption);
@@ -26,5 +29,5 @@ function galleryFactory(data) {
     figcaption.appendChild(likePhoto);
     return figure;
   }
-  return { title, image, getGalleryCardDOM };
+  return { title, image, likes, getGalleryCardDOM };
 }

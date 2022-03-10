@@ -108,6 +108,12 @@ figcaption p {
 figcaption p:nth-child(2) {
   cursor: pointer;
 }
+figcaption p span:nth-child(1) {
+  color: black;
+}
+figcaption p span:nth-child(1).number-likes {
+  color: #901c1c;
+}
 figcaption p span:nth-child(2) {
   font-family: "Font Awesome 5 Free";
 }

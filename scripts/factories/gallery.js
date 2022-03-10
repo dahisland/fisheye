@@ -1,5 +1,5 @@
 function galleryFactory(data) {
-  const { photographerId, image, title, likes } = data;
+  const { photographerId, image, title, likes, id } = data;
 
   const mediaPhoto = `./assets/images/${photographerId}/${image}`;
 
@@ -14,20 +14,22 @@ function galleryFactory(data) {
     const figcaption = document.createElement("figcaption");
     // Container for media title
     const titlePhoto = document.createElement("p");
+    titlePhoto.classList.add("title-photo");
     titlePhoto.textContent = title;
     // Container for likes
     const likePhoto = document.createElement("p");
-    likePhoto.classList.add("number-likes");
+    likePhoto.setAttribute("id", id);
     likePhoto.innerHTML =
-      "<span>" +
+      '<span class="text-likes">' +
       likes +
-      ' </span><span class="fas fa-heart" aria-label="likes"></span>';
+      ' </span><span class="fas fa-heart"></span>';
     // appendChild
     figure.appendChild(photo);
     figure.appendChild(figcaption);
     figcaption.appendChild(titlePhoto);
     figcaption.appendChild(likePhoto);
+
     return figure;
   }
-  return { title, image, likes, getGalleryCardDOM };
+  return { title, image, likes, id, getGalleryCardDOM };
 }

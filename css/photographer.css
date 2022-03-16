@@ -145,7 +145,7 @@ figcaption p span:nth-child(2) {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   height: 100px;
   width: 100%;
 }
@@ -256,5 +256,9 @@ figcaption p span:nth-child(2) {
   }
   .modal {
     width: 100%;
+  }
+  .modal header {
+    margin: 0;
+    flex-direction: row;
   }
 }

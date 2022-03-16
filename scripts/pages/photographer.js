@@ -37,6 +37,7 @@ function getPhotographer() {
 
       // Function for load gallery
       async function loadGallery() {
+        // Variables
         const sortingSelect = document.querySelector("#sorting-label");
         const optionPopularite = document.querySelector("#option-popularite");
         const optionDate = document.querySelector("#option-date");
@@ -49,19 +50,52 @@ function getPhotographer() {
             galleryContainer.appendChild(galleryCardsDOM);
           });
         }
+        // Function for add style "order" for each flexbox card (<figure>)
+        async function orderCards() {
+          photographMedias.forEach((photographMedia) => {
+            const card = document.getElementById("card" + photographMedia.id);
+            card.style.order = photographMedias.indexOf(photographMedia);
+          });
+        }
+        // Function for likes/unlikes with default display
+        async function getLikesUnlikes() {
+          photographMedias.forEach((photographMedia) => {
+            let statutLike = false;
+            const containerLike = document.getElementById(photographMedia.id);
+            containerLike.addEventListener("click", () => {
+              let likesMedia = photographMedia.likes;
+              let newlikesMedia = likesMedia + 1;
+              let newUnlikesMedia = newlikesMedia - 1;
+              const mediaObj = JSON.stringify(likesMedia);
+              const mediaObjParsed = JSON.parse(mediaObj, (value) => {
+                if (statutLike == false) {
+                  value = newlikesMedia;
+                  containerLike.firstChild.classList.add("number-likes");
+                  statutLike = true;
+                } else {
+                  value = newUnlikesMedia;
+                  containerLike.firstChild.classList.remove("number-likes");
+                  statutLike = false;
+                }
+                return value;
+              });
+              containerLike.firstChild.innerHTML = mediaObjParsed + " ";
+            });
+          });
+        }
         // Default display sorting (popularity is selected by default)
         photographMedias = photographMedias.sort((a, b) => a.likes - b.likes);
         getGallery();
-        // Function for likes/unlikes with default display
+        orderCards();
         getLikesUnlikes();
+
         // Sorting events
         sortingSelect.addEventListener("change", () => {
           if (optionPopularite.selected) {
             photographMedias = photographMedias.sort(
               (a, b) => a.likes - b.likes
             );
-            galleryContainer.innerHTML = "";
-            getGallery();
+            orderCards();
           }
           if (optionDate.selected) {
             function dateSorting(a, b) {
@@ -70,48 +104,19 @@ function getPhotographer() {
               return dateA - dateB;
             }
             photographMedias = photographMedias.sort(dateSorting);
-            galleryContainer.innerHTML = "";
-            getGallery();
+            orderCards();
           }
           if (optionTitle.selected) {
             photographMedias = photographMedias.sort((a, b) =>
               a.title.localeCompare(b.title)
             );
-            galleryContainer.innerHTML = "";
-            getGallery();
+            orderCards();
           }
-          // Function for likes/unlikes with default display
-          getLikesUnlikes();
         });
       }
       loadGallery();
 
       // -------------------------  FUNCTION FOR LIKES / UNLIKES
-
-      async function getLikesUnlikes() {
-        photographMedias.forEach((photographMedia) => {
-          let statutLike = false;
-          const containerLike = document.getElementById(photographMedia.id);
-          containerLike.addEventListener("click", () => {
-            let likesMedia = photographMedia.likes;
-            let newlikesMedia = likesMedia + 1;
-            let newUnlikesMedia = newlikesMedia - 1;
-            containerLike.firstChild.classList.toggle("number-likes");
-            const mediaObj = JSON.stringify(likesMedia);
-            const mediaObjParsed = JSON.parse(mediaObj, (value) => {
-              if (statutLike == false) {
-                value = newlikesMedia;
-                statutLike = true;
-              } else {
-                value = newUnlikesMedia;
-                statutLike = false;
-              }
-              return value;
-            });
-            containerLike.firstChild.innerHTML = mediaObjParsed + " ";
-          });
-        });
-      }
     })
     // -------------------------  MESSAGE DISPLAYED IF ERROR LOADING
     .catch(function (error) {

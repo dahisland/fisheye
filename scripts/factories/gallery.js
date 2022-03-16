@@ -6,6 +6,8 @@ function galleryFactory(data) {
   function getGalleryCardDOM() {
     // Card photo container
     const figure = document.createElement("figure");
+    figure.setAttribute("id", "card" + id);
+
     // Photo
     const photo = document.createElement("img");
     photo.setAttribute("src", mediaPhoto);

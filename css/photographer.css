@@ -1,5 +1,14 @@
+* {
+  box-sizing: border-box;
+}
 #contact_modal {
   display: none;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
 }
 
 /* -------------- Section Photograph-header --------------- */
@@ -123,43 +132,44 @@ figcaption p span:nth-child(2) {
 .modal {
   border-radius: 5px;
   background-color: #db8876;
-  width: 50%;
+  width: 30%;
+  margin: 0 auto;
   display: flex;
+  padding: 0px 20px;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 35px;
-  margin: auto;
 }
 
 .modal header {
+  display: flex;
+  flex-wrap: nowrap;
   justify-content: space-between;
   width: 100%;
 }
 
 .modal header img {
   cursor: pointer;
+  width: 25px;
 }
 
 .modal header h2 {
-  font-size: 64px;
+  font-size: 4rem;
   font-weight: normal;
-  text-align: center;
+  text-align: left;
 }
 
-form {
+.modal form {
   display: flex;
   width: 100%;
   flex-direction: column;
   align-items: flex-start;
 }
 
-form label {
+.modal form label {
   color: #312e2e;
-  font-size: 36px;
+  font-size: 1.5rem;
 }
 
-form div {
+.modal form div {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -167,7 +177,7 @@ form div {
   margin-bottom: 26px;
 }
 
-form input {
+.modal form input {
   width: 100%;
   height: 68px;
   border: none;
@@ -201,9 +211,18 @@ form input {
   .gallery-cards figure {
     width: 45%;
   }
+  .modal {
+    width: 80%;
+  }
+  .modal header h2 {
+    font-size: 2rem;
+  }
+  .modal form label {
+    font-size: 1.1rem;
+  }
 }
 
-@media screen and (max-width: 660px) {
+@media screen and (max-width: 710px) {
   .photograph-header {
     height: fit-content;
     flex-direction: column;
@@ -231,5 +250,9 @@ form input {
   }
   .gallery-cards figure img {
     height: 270px;
+  }
+  .modal {
+    width: 100%;
+    margin: 0;
   }
 }

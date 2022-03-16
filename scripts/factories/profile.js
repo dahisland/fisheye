@@ -24,6 +24,9 @@ function profileFactory(data) {
     const imgPhotographer = document.createElement("img");
     imgPhotographer.setAttribute("src", picture);
     imgPhotographer.setAttribute("alt", "Photo de " + name);
+    //------------------------------------------ TITLE FOR MODAL
+    const titleModal = document.getElementById("modal-title");
+    titleModal.innerHTML = "Contactez-moi <br>" + name;
     //
     // appendChild
     photographHeader.insertBefore(identityPhotographer, buttonContact);

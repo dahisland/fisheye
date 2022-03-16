@@ -47,7 +47,7 @@
     <div id="contact_modal">
       <div class="modal">
         <header>
-          <h2>Contactez-moi</h2>
+          <h2 id="modal-title">Contactez-moi</h2>
           <img
             src="./assets/icons/close.svg"
             alt="Fermer le formulaire"
@@ -56,8 +56,14 @@
         </header>
         <form>
           <div>
-            <label>Prénom</label>
-            <input />
+            <label for="firstname">Prénom</label>
+            <input type="text" id="firstname" name="firstname" />
+            <label for="lastname">Nom</label>
+            <input type="text" id="lastname" name="lastname" />
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" />
+            <label for="message">Votre message</label>
+            <textarea id="message" name="message" rows="8"> </textarea>
           </div>
           <button class="contact_button">Envoyer</button>
         </form>

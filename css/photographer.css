@@ -150,6 +150,7 @@ aside p {
   border-radius: 5px;
   background-color: #db8876;
   width: 50%;
+  min-height: 300px;
   margin: 3% auto;
   display: flex;
   padding: 20px 20px;
@@ -193,7 +194,7 @@ aside p {
   margin-bottom: 2px;
 }
 
-.modal form div {
+.modal form div#form-input {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -210,10 +211,19 @@ aside p {
 }
 .modal form textarea {
   width: 100%;
+  resize: none;
   border: none;
   border-radius: 5px;
 }
-
+.modal .error-data {
+  font-size: 0.8rem;
+  margin-bottom: 2px;
+  font-style: italic;
+}
+.modal .message-submit {
+  color: white;
+  margin-top: 50px;
+}
 /* -------------- medias queries  --------------- */
 @media screen and (max-width: 990px) {
   .identity h1 {

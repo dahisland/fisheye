@@ -220,7 +220,7 @@ aside p {
   resize: none;
   border: none;
   border-radius: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 .modal .error-data {
   font-size: 0.8rem;
@@ -234,6 +234,13 @@ aside p {
 .modal #submit-button {
   width: fit-content;
   padding: 10px 30px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
+  border: none;
+  background-color: #901c1c;
+  border-radius: 5px;
+  cursor: pointer;
 }
 /* -------------- medias queries  --------------- */
 @media screen and (max-width: 990px) {

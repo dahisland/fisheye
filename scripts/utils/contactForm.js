@@ -48,9 +48,9 @@ function displayModal() {
     error.style.display = "none";
   });
   inputs.forEach((input) => {
-    input.style.border = "none";
+    input.style.outline = "none";
   });
-  textarea.style.border = "none";
+  textarea.style.outline = "none";
 }
 function closeModal() {
   modal.style.display = "none";
@@ -67,12 +67,12 @@ function validateInputs(inputReference, label, errorReference, regex) {
     errorReference.style.color = "#901c1c";
     errorReference.innerHTML =
       "* Veuillez indiquer un " + label + " valide (requis)";
-    inputReference.style.border = "2px solid red";
+    inputReference.style.outline = "2px solid red";
     return false;
   } else {
     errorReference.style.color = "green";
     errorReference.innerHTML = '<i class="fa fa-check"></i>';
-    inputReference.style.border = "none";
+    inputReference.style.outline = "none";
     return true;
   }
 }
@@ -83,12 +83,12 @@ function validateTextarea() {
     errorTextarea.style.color = "#901c1c";
     errorTextarea.innerHTML =
       "* Veuillez laisser un message (min 10 caractères, max 400)";
-    textarea.style.border = "2px solid red";
+    textarea.style.outline = "2px solid red";
     return false;
   } else {
     errorTextarea.style.color = "green";
     errorTextarea.innerHTML = '<i class="fa fa-check"></i>';
-    textarea.style.border = "none";
+    textarea.style.outline = "none";
     return true;
   }
 }

@@ -145,6 +145,56 @@ function getPhotographer() {
         });
       }
       loadGallery();
+
+      // Function for lightbox
+      async function loadLightbox() {
+        const lightboxModal = document.querySelector(".lightbox_modal");
+        const lightboxCardRelative = document.querySelector(
+          ".lightbox_card--relative"
+        );
+        // Creation button to close lightbox modale
+        const lightboxModalButton = document.createElement("button");
+        const lightboxButtonImg = document.createElement("img");
+        lightboxButtonImg.setAttribute("src", "./assets/icons/close.svg");
+        lightboxButtonImg.setAttribute("alt", "Fermer la lightbox");
+        lightboxButtonImg.setAttribute("fill", "red");
+        lightboxModalButton.appendChild(lightboxButtonImg);
+        lightboxCardRelative.appendChild(lightboxModalButton);
+
+        // Creation cards lightbox
+        photographMedias.forEach((photographMedia) => {
+          const lightboxModele = lightboxFactory(photographMedia);
+          const lightboxCardsDOM = lightboxModele.getLightboxCardDOM();
+          lightboxCardRelative.appendChild(lightboxCardsDOM);
+        });
+
+        // Launch Gallery lightbox
+        const imagesGallery = document.querySelectorAll(".images-gallery");
+        const imagesLightbox = document.querySelectorAll(".lightbox_card");
+        imagesGallery.forEach((imageGallery) => {
+          imageGallery.addEventListener("click", () => {
+            lightboxModal.style.display = "block";
+            body.style.overflow = "hidden";
+            imagesLightbox.forEach((imageLightbox) => {
+              if (
+                imageGallery.getAttribute("data-id") ==
+                imageLightbox.getAttribute("data-id")
+              ) {
+                imageLightbox.classList.add("lightbox_card--active");
+              } else {
+                imageLightbox.classList.remove("lightbox_card--active");
+              }
+            });
+          });
+        });
+
+        // Close Gallery lightbox
+        lightboxModalButton.addEventListener("click", () => {
+          lightboxModal.style.display = "none";
+          body.style.overflow = "auto";
+        });
+      }
+      loadLightbox();
     })
     // -------------------------  MESSAGE DISPLAYED IF ERROR LOADING
     .catch(function (error) {

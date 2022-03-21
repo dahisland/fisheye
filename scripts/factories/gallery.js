@@ -1,7 +1,7 @@
 function galleryFactory(data) {
   const { photographerId, image, title, likes, id } = data;
 
-  const mediaPhoto = `./assets/images/${photographerId}/${image}`;
+  const mediaPhoto = `./assets/medias/${photographerId}/${image}`;
 
   function getGalleryCardDOM() {
     // Card photo container
@@ -12,6 +12,8 @@ function galleryFactory(data) {
     const photo = document.createElement("img");
     photo.setAttribute("src", mediaPhoto);
     photo.setAttribute("alt", "Photo de " + title);
+    photo.setAttribute("data-id", id);
+    photo.classList.add("images-gallery");
     // figaption
     const figcaption = document.createElement("figcaption");
     // Container for media title

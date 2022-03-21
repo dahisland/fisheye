@@ -8,6 +8,7 @@ const inputLastname = document.querySelector("#lastname");
 const inputEmail = document.querySelector("#email");
 const textarea = document.querySelector("#message");
 const inputs = document.querySelectorAll(".form-input");
+const body = document.querySelector("body");
 
 // Create element paragraph for message when submit succeed
 const pSubmit = document.createElement("p");
@@ -43,6 +44,7 @@ function displayModal() {
   modal.style.display = "block";
   contactForm.style.display = "block";
   messageSubmit.style.display = "none";
+  body.style.overflow = "hidden";
   contactForm.reset();
   errorData.forEach((error) => {
     error.style.display = "none";
@@ -54,6 +56,7 @@ function displayModal() {
 }
 function closeModal() {
   modal.style.display = "none";
+  body.style.overflow = "visible";
 }
 
 // Function for validation form inputs
@@ -110,6 +113,10 @@ contactForm.addEventListener("submit", (e) => {
   } else {
     contactForm.style.display = "none";
     messageSubmit.style.display = "block";
+    console.log("Prénom : " + inputFirstname.value);
+    console.log("Nom : " + inputLastname.value);
+    console.log("Email : " + inputEmail.value);
+    console.log("Message : " + textarea.value);
     return true;
   }
 });

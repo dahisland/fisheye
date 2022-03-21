@@ -19,7 +19,7 @@
     <header>
       <a href="./index.html" aria-label="Aller à la page d'accueil"
         ><img
-          src="./assets/images/logo.png"
+          src="./assets/medias/logo.png"
           alt="Fisheye Home page"
           class="logo"
       /></a>
@@ -44,6 +44,9 @@
         <div class="gallery-cards"></div>
       </section>
     </main>
+    <div class="lightbox_modal">
+      <div class="lightbox_card--relative"></div>
+    </div>
     <div id="contact_modal">
       <div class="modal">
         <header>
@@ -57,7 +60,6 @@
         <form id="contact-form">
           <div id="form-inputs">
             <label for="firstname">Prénom</label>
-            <!-- <div class="error-message"></div> -->
             <input
               type="text"
               id="firstname"
@@ -65,7 +67,6 @@
               name="firstname"
             />
             <label for="lastname">Nom</label>
-            <!-- <div class="error-message"></div> -->
             <input
               type="text"
               id="lastname"
@@ -73,10 +74,8 @@
               name="lastname"
             />
             <label for="email">Email</label>
-            <!-- <div class="error-message"></div> -->
             <input type="email" id="email" class="form-input" name="email" />
             <label for="message">Votre message</label>
-            <!-- <div class="error-message"></div> -->
             <textarea
               id="message"
               name="message"
@@ -89,6 +88,7 @@
       </div>
     </div>
     <script src="./scripts/utils/contactForm.js"></script>
+    <script src="./scripts/utils/lightbox.js"></script>
     <script src="./scripts/factories/profile.js"></script>
     <script src="./scripts/factories/gallery.js"></script>
     <script src="./scripts/pages/photographer.js"></script>

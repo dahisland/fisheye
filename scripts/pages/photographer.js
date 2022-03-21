@@ -155,7 +155,7 @@ function getPhotographer() {
         // Creation button to close lightbox modale
         const lightboxModalButton = document.createElement("button");
         const lightboxButtonImg = document.createElement("img");
-        lightboxButtonImg.setAttribute("src", "./assets/icons/close.svg");
+        lightboxButtonImg.setAttribute("src", "./assets/icons/close_brown.svg");
         lightboxButtonImg.setAttribute("alt", "Fermer la lightbox");
         lightboxButtonImg.setAttribute("fill", "red");
         lightboxModalButton.appendChild(lightboxButtonImg);

@@ -182,7 +182,7 @@ aside p {
 .lightbox_card--relative button {
   position: absolute;
   top: 2rem;
-  right: 0;
+  right: 5px;
   z-index: 1000;
   cursor: pointer;
   border: none;
@@ -363,9 +363,12 @@ aside p {
   .lightbox_card figure figcaption {
     font-size: 0.8rem;
   }
+  .lightbox_card--relative button {
+    right: 8px;
+  }
   .lightbox_card--relative button img {
-    width: 1rem;
-    height: 1rem;
+    width: 0.9rem;
+    height: 0.9rem;
   }
 }
 

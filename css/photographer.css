@@ -357,6 +357,9 @@ aside p {
     right: 0;
     font-size: 0.8rem;
   }
+  .lightbox_card--relative {
+    width: 100%;
+  }
   .lightbox_card figure figcaption {
     font-size: 0.8rem;
   }

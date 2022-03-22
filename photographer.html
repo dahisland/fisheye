@@ -16,6 +16,15 @@
     <link href="./css/photographer.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
+    <!-- LOADER -->
+    <div class="loader">
+      <img
+        src="./assets/icons/favicon.png"
+        alt="image loader"
+        class="icon-loader"
+      />
+    </div>
+    <!-- HEADER -->
     <header>
       <a href="./index.html" aria-label="Aller à la page d'accueil"
         ><img
@@ -24,13 +33,17 @@
           class="logo"
       /></a>
     </header>
+    <!-- MAIN -->
     <main id="main">
+      <!-- photograph profile -->
       <section class="photograph-header">
         <button class="contact_button" onclick="displayModal()">
           Contactez-moi
         </button>
       </section>
+      <!-- GALLERY -->
       <section class="photograph-gallery">
+        <!-- sorting filter -->
         <form class="gallery-sorting">
           <label for="sorting-label">Trier par :</label>
           <select name="tri" id="sorting-label" size="1">
@@ -41,12 +54,16 @@
             <option value="titre" id="option-title">Titre</option>
           </select>
         </form>
+        <!-- images gallery -->
         <div class="gallery-cards"></div>
       </section>
     </main>
+    <!-- MODALES -->
+    <!-- Lightbox gallery -->
     <div class="lightbox_modal">
       <div class="lightbox_card--relative"></div>
     </div>
+    <!-- Form contact -->
     <div id="contact_modal">
       <div class="modal">
         <header>
@@ -87,6 +104,7 @@
         </form>
       </div>
     </div>
+    <script src="./scripts/utils/loader.js"></script>
     <script src="./scripts/utils/contactForm.js"></script>
     <script src="./scripts/utils/lightbox.js"></script>
     <script src="./scripts/factories/profile.js"></script>

@@ -169,6 +169,7 @@ function getPhotographer() {
         });
 
         // Launch Gallery lightbox
+
         const imagesGallery = document.querySelectorAll(".images-gallery");
         const imagesLightbox = document.querySelectorAll(".lightbox_card");
         imagesGallery.forEach((imageGallery) => {

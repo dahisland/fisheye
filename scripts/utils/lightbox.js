@@ -4,26 +4,27 @@ function lightboxFactory(data) {
   const videoPhotographer = `./assets/medias/${photographerId}/${video}`;
 
   function getLightboxCardDOM() {
-    const lightboxCard = document.createElement("div");
-    lightboxCard.classList.add("lightbox_card");
-    lightboxCard.setAttribute("data-id", id);
+    const containerMedia = document.createElement("div");
+    containerMedia.classList.add("lightbox_card--absolute");
+    containerMedia.setAttribute("data-id", id);
 
+    // Creation buttons navigation
     const beforeButton = document.createElement("a");
+    beforeButton.classList.add("left-button");
     beforeButton.setAttribute("href", "#");
     beforeButton.innerHTML = '<span class="fas fa-angle-left"></span>';
 
-    const figure = document.createElement("figure");
-
-    const figcaption = document.createElement("figcaption");
-    figcaption.innerHTML = title;
-
     const nextButton = document.createElement("a");
+    nextButton.classList.add("right-button");
     nextButton.setAttribute("href", "#");
     nextButton.innerHTML = '<span class="fas fa-angle-right"></span>';
 
-    lightboxCard.appendChild(beforeButton);
-    lightboxCard.appendChild(figure);
-    lightboxCard.appendChild(nextButton);
+    // Creation figure for media & caption
+    const figure = document.createElement("figure");
+    figure.classList.add("figure-media");
+
+    const figcaption = document.createElement("figcaption");
+    figcaption.innerHTML = title;
 
     if (video !== undefined) {
       const containerVideo = document.createElement("video");
@@ -40,8 +41,11 @@ function lightboxFactory(data) {
       figure.appendChild(containerPicture);
       figure.appendChild(figcaption);
     }
+    containerMedia.appendChild(beforeButton);
+    containerMedia.appendChild(figure);
+    containerMedia.appendChild(nextButton);
 
-    return lightboxCard;
+    return containerMedia;
   }
   return { title, image, video, id, getLightboxCardDOM };
 }

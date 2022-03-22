@@ -149,9 +149,12 @@ function getPhotographer() {
       // Function for lightbox
       async function loadLightbox() {
         const lightboxModal = document.querySelector(".lightbox_modal");
-        const lightboxCardRelative = document.querySelector(
-          ".lightbox_card--relative"
-        );
+        const lightboxCard = document.querySelector(".lightbox_card");
+        const sortingSelect = document.querySelector("#sorting-label");
+        const optionPopularite = document.querySelector("#option-popularite");
+        const optionDate = document.querySelector("#option-date");
+        const optionTitle = document.querySelector("#option-title");
+
         // Creation button to close lightbox modale
         const lightboxModalButton = document.createElement("button");
         const lightboxButtonImg = document.createElement("img");
@@ -159,35 +162,86 @@ function getPhotographer() {
         lightboxButtonImg.setAttribute("alt", "Fermer la lightbox");
         lightboxButtonImg.setAttribute("fill", "red");
         lightboxModalButton.appendChild(lightboxButtonImg);
-        lightboxCardRelative.appendChild(lightboxModalButton);
+        lightboxCard.appendChild(lightboxModalButton);
 
         // Creation cards lightbox
-        photographMedias.forEach((photographMedia) => {
-          const lightboxModele = lightboxFactory(photographMedia);
-          const lightboxCardsDOM = lightboxModele.getLightboxCardDOM();
-          lightboxCardRelative.appendChild(lightboxCardsDOM);
-        });
+        function getLightboxCards() {
+          photographMedias.forEach((photographMedia) => {
+            const lightboxModele = lightboxFactory(photographMedia);
+            const lightboxCardsDOM = lightboxModele.getLightboxCardDOM();
+            lightboxCard.appendChild(lightboxCardsDOM);
+          });
+        }
+        getLightboxCards();
 
         // Launch Gallery lightbox
-
         const imagesGallery = document.querySelectorAll(".images-gallery");
-        const imagesLightbox = document.querySelectorAll(".lightbox_card");
-        imagesGallery.forEach((imageGallery) => {
-          imageGallery.addEventListener("click", () => {
-            lightboxModal.style.display = "block";
-            body.style.overflow = "hidden";
-            imagesLightbox.forEach((imageLightbox) => {
+        const imagesLightbox = document.querySelectorAll(
+          ".lightbox_card--absolute"
+        );
+        const leftButtons = document.querySelectorAll(".left-button");
+        const rightButtons = document.querySelectorAll(".right-button");
+
+        // Transform nodeslists in arrays
+        let arrayCardsLightbox = [];
+        imagesLightbox.forEach((imageLightbox) => {
+          arrayCardsLightbox.push(imageLightbox);
+        });
+
+        let arrayRightButtons = [];
+        rightButtons.forEach((rightButton) => {
+          arrayRightButtons.push(rightButton);
+        });
+
+        let arrayLeftButtons = [];
+        leftButtons.forEach((leftButton) => {
+          arrayLeftButtons.push(leftButton);
+        });
+
+        // Add class active for active media on click on gallery image
+        arrayCardsLightbox.forEach((arrayCardLightbox) => {
+          imagesGallery.forEach((imageGallery) => {
+            imageGallery.addEventListener("click", () => {
+              lightboxModal.style.display = "block";
+              body.style.overflow = "hidden";
               if (
                 imageGallery.getAttribute("data-id") ==
-                imageLightbox.getAttribute("data-id")
+                arrayCardLightbox.getAttribute("data-id")
               ) {
-                imageLightbox.classList.add("lightbox_card--active");
+                arrayCardLightbox.classList.add("lightbox_card--active");
               } else {
-                imageLightbox.classList.remove("lightbox_card--active");
+                arrayCardLightbox.classList.remove("lightbox_card--active");
               }
             });
           });
         });
+
+        // Function for left & right buttons
+        function eventNavButtons(operatorCard, arrayButtons, indexDisabled) {
+          for (let i = 0; i < arrayCardsLightbox.length; i++) {
+            let currentCard = arrayCardsLightbox[i];
+            let nextCard = arrayCardsLightbox[i + operatorCard];
+            let currentButton = arrayButtons[i];
+            let indexCurrentCard = arrayCardsLightbox.indexOf(
+              arrayCardsLightbox[i]
+            );
+            let indexCurrentButton = arrayButtons.indexOf(arrayButtons[i]);
+            if (indexCurrentCard === indexCurrentButton) {
+              currentButton.addEventListener("click", () => {
+                currentCard.classList.remove("lightbox_card--active");
+                nextCard.classList.add("lightbox_card--active");
+              });
+            }
+            if (indexCurrentCard === indexDisabled) {
+              currentButton.classList.add("disabled");
+            }
+          }
+        }
+
+        // Call function for nav left button
+        eventNavButtons(-1, arrayLeftButtons, 0);
+        // Call function for nav right button
+        eventNavButtons(+1, arrayRightButtons, arrayCardsLightbox.length - 1);
 
         // Close Gallery lightbox
         lightboxModalButton.addEventListener("click", () => {

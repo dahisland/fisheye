@@ -56,7 +56,7 @@ function displayModal() {
 }
 function closeModal() {
   modal.style.display = "none";
-  body.style.overflow = "visible";
+  body.style.overflow = "auto";
 }
 
 // Function for validation form inputs

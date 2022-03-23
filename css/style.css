@@ -146,6 +146,10 @@ main {
   font-weight: lighter;
 }
 
+/* ------------------------------------------------------------------------ */
+/* ---------------------------- MEDIAS QUERIES ---------------------------- */
+/* ------------------------------------------------------------------------ */
+
 @media screen and (max-width: 990px) {
   html {
     font-size: 20px;
@@ -155,6 +159,12 @@ main {
   }
   .photographer_section article {
     width: 45%;
+  }
+  .loader {
+    justify-content: flex-start;
+  }
+  .icon-loader {
+    margin-top: 9rem;
   }
 }
 

@@ -22,7 +22,7 @@ function galleryFactory(data) {
     titlePhoto.textContent = title;
     // Container for likes
     const likePhoto = document.createElement("p");
-    likePhoto.setAttribute("id", id);
+    likePhoto.setAttribute("id", "likes" + id);
     likePhoto.innerHTML =
       '<span class="text-likes">' +
       likes +

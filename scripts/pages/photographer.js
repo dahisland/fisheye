@@ -1,9 +1,10 @@
-//Mettre le code JavaScript lié à la page photographer.html
-
 const urlParam = new URL(window.location.href);
 const idUrlParam = urlParam.searchParams.get("id");
 function getPhotographer() {
-  // --------------------------------------------------------------  FETCH
+  // ----------------------------------------------------------------------------- //
+  // ----------------------------------- FETCH ----------------------------------- //
+  // ----------------------------------------------------------------------------- //
+
   fetch("data/photographers.json")
     .then((response) => response.json())
     .then((json) => {
@@ -11,32 +12,67 @@ function getPhotographer() {
       let medias = json.medias.sort((a, b) => a.likes - b.likes);
       const galleryContainer = document.querySelector(".gallery-cards");
 
-      // -------------------------  DISPLAY PHOTOGRAPHER PROFILE
+      // -------------------------------------------------------------------------- //
+      // --------------------- DISPLAY PHOTOGRAPHER PROFILE ----------------------- //
+      // -------------------------------------------------------------------------- //
+
       async function photographerProfile() {
         photographers.forEach((photographer) => {
           const idProfile = photographer.id;
           if (idProfile == idUrlParam) {
             const photographerModel = profileFactory(photographer);
             photographerModel.getUserProfileDOM();
-            // -------------------------  DISPLAY PRICE ASIDE
-            const aside = document.createElement("aside");
-            const pricePhotographer = document.createElement("p");
-            pricePhotographer.classList.add("price-photographer");
-            pricePhotographer.innerHTML = photographer.price + "€/jour";
-            const main = document.querySelector("main");
-            main.appendChild(aside);
-            aside.appendChild(pricePhotographer);
           }
         });
       }
       photographerProfile();
 
-      // -------------------------  DISPLAY PHOTOGRAPHER GALLERY
+      // -------------------------------------------------------------------------- //
+      // ----------- DISPLAY PHOTOGRAPHER ASIDE (TOTAL LIKES & PRICE) ------------- //
+      // -------------------------------------------------------------------------- //
 
-      // New array containing only photographer's medias
+      async function photographerAside() {
+        photographers.forEach((photographer) => {
+          const idProfile = photographer.id;
+          if (idProfile == idUrlParam) {
+            const main = document.querySelector("main");
+            const aside = document.createElement("aside");
+            const pricePhotographer = document.createElement("p");
+            pricePhotographer.classList.add("price-photographer");
+            pricePhotographer.innerHTML = photographer.price + "€/jour";
+            const totalLikesPhotographer = document.createElement("p");
+            totalLikesPhotographer.classList.add("total-likes-photographer");
+
+            main.appendChild(aside);
+            aside.appendChild(totalLikesPhotographer);
+            aside.appendChild(pricePhotographer);
+          }
+        });
+      }
+      photographerAside();
+
+      // -------------------------------------------------------------------------- //
+      // ----------------- DISPLAY SECTION PHOTOGRAPHER GALLERY ------------------- //
+      // -------------------------------------------------------------------------- //
+
+      const totalLikesContainer = document.querySelector(
+        ".total-likes-photographer"
+      );
+      // Variables for sorting <select>
+      const sortingSelect = document.querySelector("#sorting-label");
+      const optionPopularite = document.querySelector("#option-popularite");
+      const optionDate = document.querySelector("#option-date");
+      const optionTitle = document.querySelector("#option-title");
+      // Array with photograph medias
       let photographMedias = [];
-      // Function to construct new array
-      async function filterGallery() {
+
+      // -- Function to create array with photographer medias -- //
+      // ------------------------------------------------------- //
+
+      // Sorting by default (popularity is selected by default)
+      photographMedias = photographMedias.sort((a, b) => a.likes - b.likes);
+
+      async function getArrayPhotographerGallery() {
         medias.forEach((media) => {
           const idPhotoMedias = media.photographerId;
           if (idUrlParam == idPhotoMedias) {
@@ -44,118 +80,92 @@ function getPhotographer() {
           }
         });
       }
-      filterGallery();
+      getArrayPhotographerGallery();
 
-      // -------------------------  DISPLAY TOTAL LIKES ASIDE
-      const asideContainer = document.querySelector("aside");
-      const priceContainer = document.querySelector(".price-photographer");
-      const totalLikes = document.createElement("p");
-      let sumLikes = 0;
-      for (let i = 0; i < photographMedias.length; i++) {
-        sumLikes += photographMedias[i].likes;
-      }
-      totalLikes.innerHTML = sumLikes + ' <span class="fas fa-heart"></span>';
-      asideContainer.insertBefore(totalLikes, priceContainer);
+      // ----------- Function to get images gallery ------------ //
+      // ------------------------------------------------------- //
 
-      // Function for load gallery
-      async function loadGallery() {
-        // Variables
-        const sortingSelect = document.querySelector("#sorting-label");
-        const optionPopularite = document.querySelector("#option-popularite");
-        const optionDate = document.querySelector("#option-date");
-        const optionTitle = document.querySelector("#option-title");
-        // Function for structure of gallery
-        async function getGallery() {
-          photographMedias.forEach((photographMedia) => {
-            const mediaModel = galleryFactory(photographMedia);
-            const galleryCardsDOM = mediaModel.getGalleryCardDOM();
-            galleryContainer.appendChild(galleryCardsDOM);
-          });
-        }
-        // Function for add style "order" for each flexbox card (<figure>)
-        async function orderCards() {
-          photographMedias.forEach((photographMedia) => {
-            const card = document.getElementById("card" + photographMedia.id);
-            card.style.order = photographMedias.indexOf(photographMedia);
-          });
-        }
-        // Function for likes/unlikes with default display
-        async function getLikesUnlikes() {
-          photographMedias.forEach((photographMedia) => {
-            let statutLike = false;
-            const containerLike = document.getElementById(photographMedia.id);
-            containerLike.addEventListener("click", () => {
-              let likesMedia = photographMedia.likes;
-              const mediaObj = JSON.stringify(likesMedia);
-              const mediaObjParsed = JSON.parse(mediaObj, (value) => {
-                if (statutLike == false) {
-                  value = likesMedia + 1;
-                  containerLike.firstChild.classList.add("number-likes");
-                  statutLike = true;
-                } else {
-                  value = likesMedia - 1;
-                  containerLike.firstChild.classList.remove("number-likes");
-                  statutLike = false;
-                }
-                return value;
-              });
-              photographMedia.likes = mediaObjParsed;
-              containerLike.firstChild.innerHTML = mediaObjParsed + " ";
-
-              // Recalculate total likes with new value for medias liked
-              let sumLikes = 0;
-              for (let i = 0; i < photographMedias.length; i++) {
-                sumLikes += photographMedias[i].likes;
-              }
-              totalLikes.innerHTML =
-                sumLikes + ' <span class="fas fa-heart"></span>';
-              asideContainer.insertBefore(totalLikes, priceContainer);
-            });
-          });
-        }
-        // Default display sorting (popularity is selected by default)
-        photographMedias = photographMedias.sort((a, b) => a.likes - b.likes);
-        getGallery();
-        orderCards();
-        getLikesUnlikes();
-
-        // Sorting events
-        sortingSelect.addEventListener("change", () => {
-          if (optionPopularite.selected) {
-            photographMedias = photographMedias.sort(
-              (a, b) => a.likes - b.likes
-            );
-            orderCards();
-          }
-          if (optionDate.selected) {
-            function dateSorting(a, b) {
-              const dateA = new Date(a.date);
-              const dateB = new Date(b.date);
-              return dateA - dateB;
-            }
-            photographMedias = photographMedias.sort(dateSorting);
-            orderCards();
-          }
-          if (optionTitle.selected) {
-            photographMedias = photographMedias.sort((a, b) =>
-              a.title.localeCompare(b.title)
-            );
-            orderCards();
-          }
+      async function getImagesGallery() {
+        photographMedias.forEach((photographMedia) => {
+          const mediaModel = galleryFactory(photographMedia);
+          const galleryCardsDOM = mediaModel.getGalleryCardDOM();
+          galleryContainer.appendChild(galleryCardsDOM);
         });
       }
-      loadGallery();
 
-      // Function for lightbox
-      async function loadLightbox() {
-        const lightboxModal = document.querySelector(".lightbox_modal");
-        const lightboxCard = document.querySelector(".lightbox_card");
-        const sortingSelect = document.querySelector("#sorting-label");
-        const optionPopularite = document.querySelector("#option-popularite");
-        const optionDate = document.querySelector("#option-date");
-        const optionTitle = document.querySelector("#option-title");
+      // ---------- Function to calculate total likes ---------- //
+      // ------------------------------------------------------- //
 
-        // Creation button to close lightbox modale
+      async function getTotalLikes() {
+        let sumLikes = 0;
+        for (let i = 0; i < photographMedias.length; i++) {
+          sumLikes += photographMedias[i].likes;
+        }
+        totalLikesContainer.innerHTML =
+          sumLikes + ' <span class="fas fa-heart"></span>';
+      }
+      // ------------ Function for attribute order ------------- //
+      // ------------------------------------------------------- //
+
+      // Add/change CSS attribute "order" for each <figure> image gallery
+      async function addCssOrder() {
+        photographMedias.forEach((photographMedia) => {
+          const card = document.getElementById("card" + photographMedia.id);
+          card.style.order = photographMedias.indexOf(photographMedia);
+        });
+      }
+
+      // ---------- Function for incrementation likes ---------- //
+      // ------------------------------------------------------- //
+
+      async function incrementLikes() {
+        photographMedias.forEach((photographMedia) => {
+          let statutLike = false;
+          const containerLike = document.getElementById(
+            "likes" + photographMedia.id
+          );
+          containerLike.addEventListener("click", () => {
+            let likesMedia = photographMedia.likes;
+            const mediaObj = JSON.stringify(likesMedia);
+            const mediaObjParsed = JSON.parse(mediaObj, (value) => {
+              if (statutLike == false) {
+                value = likesMedia + 1;
+                containerLike.firstChild.classList.add("number-likes");
+                statutLike = true;
+              } else {
+                value = likesMedia - 1;
+                containerLike.firstChild.classList.remove("number-likes");
+                statutLike = false;
+              }
+              return value;
+            });
+            photographMedia.likes = mediaObjParsed;
+            containerLike.firstChild.innerHTML = mediaObjParsed + " ";
+            // Recalculate total likes with new value for medias liked
+            getTotalLikes();
+          });
+        });
+      }
+
+      // ----------------- Get section gallery ----------------- //
+      // ------------------------------------------------------- //
+
+      getImagesGallery();
+      addCssOrder();
+      incrementLikes();
+      getTotalLikes();
+
+      // -------------------------------------------------------------------------- //
+      // --------------------------- DISPLAY LIGHTBOX ----------------------------- //
+      // -------------------------------------------------------------------------- //
+
+      const lightboxModal = document.querySelector(".lightbox_modal");
+      const lightboxCard = document.querySelector(".lightbox_card");
+
+      async function getLightbox() {
+        // ----------------- Generate medias cards --------------- //
+        // ------------------------------------------------------- //
+        // ----------- Create button close
         const lightboxModalButton = document.createElement("button");
         const lightboxButtonImg = document.createElement("img");
         lightboxButtonImg.setAttribute("src", "./assets/icons/close_brown.svg");
@@ -164,42 +174,44 @@ function getPhotographer() {
         lightboxModalButton.appendChild(lightboxButtonImg);
         lightboxCard.appendChild(lightboxModalButton);
 
-        // Creation cards lightbox
-        function getLightboxCards() {
-          photographMedias.forEach((photographMedia) => {
-            const lightboxModele = lightboxFactory(photographMedia);
-            const lightboxCardsDOM = lightboxModele.getLightboxCardDOM();
-            lightboxCard.appendChild(lightboxCardsDOM);
-          });
-        }
-        getLightboxCards();
+        // ----------- Get medias cards
+        photographMedias.forEach((photographMedia) => {
+          const lightboxModele = lightboxFactory(photographMedia);
+          const lightboxCardsDOM = lightboxModele.getLightboxCardDOM();
+          lightboxCard.appendChild(lightboxCardsDOM);
+        });
 
-        // Launch Gallery lightbox
-        const imagesGallery = document.querySelectorAll(".images-gallery");
+        // ----------------------- Variables --------------------- //
+        // ------------------------------------------------------- //
+
         const imagesLightbox = document.querySelectorAll(
           ".lightbox_card--absolute"
         );
-        const leftButtons = document.querySelectorAll(".left-button");
         const rightButtons = document.querySelectorAll(".right-button");
+        const leftButtons = document.querySelectorAll(".left-button");
 
-        // Transform nodeslists in arrays
+        // ----------- Generate arrays with nodeslists
+        // Array medias cards
         let arrayCardsLightbox = [];
         imagesLightbox.forEach((imageLightbox) => {
           arrayCardsLightbox.push(imageLightbox);
         });
-
+        // Array right buttons
         let arrayRightButtons = [];
         rightButtons.forEach((rightButton) => {
           arrayRightButtons.push(rightButton);
         });
-
+        // Array left buttons
         let arrayLeftButtons = [];
         leftButtons.forEach((leftButton) => {
           arrayLeftButtons.push(leftButton);
         });
 
-        // Add class active for active media on click on gallery image
+        // --------------------- Active media -------------------- //
+        // ------------------------------------------------------- //
+
         arrayCardsLightbox.forEach((arrayCardLightbox) => {
+          const imagesGallery = document.querySelectorAll(".images-gallery");
           imagesGallery.forEach((imageGallery) => {
             imageGallery.addEventListener("click", () => {
               lightboxModal.style.display = "block";
@@ -216,8 +228,14 @@ function getPhotographer() {
           });
         });
 
-        // Function for left & right buttons
-        function eventNavButtons(operatorCard, arrayButtons, indexDisabled) {
+        // --------------- Function for nav buttons -------------- //
+        // ------------------------------------------------------- //
+
+        async function eventNavButtons(
+          operatorCard,
+          arrayButtons,
+          indexDisabled
+        ) {
           for (let i = 0; i < arrayCardsLightbox.length; i++) {
             let currentCard = arrayCardsLightbox[i];
             let nextCard = arrayCardsLightbox[i + operatorCard];
@@ -237,21 +255,74 @@ function getPhotographer() {
             }
           }
         }
-
-        // Call function for nav left button
+        // ----------- Nav left button
         eventNavButtons(-1, arrayLeftButtons, 0);
-        // Call function for nav right button
+        // ----------- Nav right button
         eventNavButtons(+1, arrayRightButtons, arrayCardsLightbox.length - 1);
 
-        // Close Gallery lightbox
-        lightboxModalButton.addEventListener("click", () => {
-          lightboxModal.style.display = "none";
-          body.style.overflow = "auto";
-        });
+        // ------------------ Event close lightbox --------------- //
+        // ------------------------------------------------------- //
+
+        async function closeLightbox() {
+          lightboxModalButton.addEventListener("click", () => {
+            lightboxModal.style.display = "none";
+            body.style.overflow = "auto";
+          });
+        }
+        closeLightbox();
       }
-      loadLightbox();
+      getLightbox();
+
+      // -------------------------------------------------------------------------- //
+      // ---------------------------- SORTING EVENTS ------------------------------ //
+      // -------------------------------------------------------------------------- //
+
+      async function sortingFilter() {
+        sortingSelect.addEventListener("change", () => {
+          if (optionPopularite.selected == true) {
+            optionTitle.selected = false;
+            optionDate.selected = false;
+            lightboxCard.innerHTML = ""; // Clear lightbox container
+            photographMedias = photographMedias.sort(
+              (a, b) => a.likes - b.likes
+            );
+            addCssOrder();
+            getLightbox(); // Display lightbox
+          }
+          if (optionDate.selected == true) {
+            optionPopularite.selected = false;
+            optionTitle.selected = false;
+            lightboxCard.innerHTML = ""; // Clear lightbox container
+            function dateSorting(a, b) {
+              const dateA = new Date(a.date);
+              const dateB = new Date(b.date);
+              return dateA - dateB;
+            }
+            photographMedias = photographMedias.sort(dateSorting);
+            addCssOrder();
+            getLightbox(); // Display lightbox
+          }
+          if (optionTitle.selected == true) {
+            optionPopularite.selected = false;
+            optionDate.selected = false;
+            lightboxCard.innerHTML = ""; // Clear lightbox container
+            photographMedias = photographMedias.sort((a, b) =>
+              a.title.localeCompare(b.title)
+            );
+            addCssOrder();
+            getLightbox(); // Display lightbox
+          }
+          console.log(photographMedias);
+        });
+        return photographMedias;
+      }
+      sortingFilter();
     })
-    // -------------------------  MESSAGE DISPLAYED IF ERROR LOADING
+
+    // -------------------------------------------------------------------------- //
+    // ------------------- MESSAGE DISPLAYED IF ERROR LOADING ------------------- //
+    // -------------------------------------------------------------------------- //
+
     .catch(function (error) {
       main.innerHTML +=
         "<p>Erreur de chargement des données</p><p>" + error.message + "</p>";

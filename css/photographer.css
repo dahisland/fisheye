@@ -86,6 +86,10 @@
   border: none;
   border-radius: 4px;
 }
+.gallery-sorting #sorting-label:focus,
+#sorting-label:active {
+  outline: none;
+}
 
 /* Gallery container */
 

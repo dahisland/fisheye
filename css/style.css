@@ -26,9 +26,20 @@
   left: 0;
   z-index: 999;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+}
+.loader-img {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto;
+  background-image: url(../assets/icons/favicon.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: anim-loader 1800ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 .icon-loader {
   animation: anim-loader 1800ms;
@@ -159,12 +170,6 @@ main {
   }
   .photographer_section article {
     width: 45%;
-  }
-  .loader {
-    justify-content: flex-start;
-  }
-  .icon-loader {
-    margin-top: 9rem;
   }
 }
 

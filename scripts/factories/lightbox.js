@@ -1,7 +1,8 @@
 function lightboxFactory(data) {
-  const { photographerId, image, video, title, id } = data;
+  const { photographerId, image, video, title, id, tracks } = data;
   const imagePhotographer = `./assets/medias/${photographerId}/${image}`;
   const videoPhotographer = `./assets/medias/${photographerId}/${video}`;
+  const trackFile = `./assets/tracks/${tracks}`;
 
   function getLightboxCardDOM() {
     const containerMedia = document.createElement("div");
@@ -34,6 +35,12 @@ function lightboxFactory(data) {
       containerVideo.setAttribute("controls", "");
       containerVideo.setAttribute("width", "100%");
       containerVideo.setAttribute("aria-label", "video " + title);
+      const trackVideo = document.createElement("track");
+      trackVideo.setAttribute("kind", "subtitles");
+      trackVideo.setAttribute("src", trackFile);
+      trackVideo.setAttribute("srclang", "en");
+      trackVideo.setAttribute("label", "Anglais");
+      containerVideo.appendChild(trackVideo);
       figure.appendChild(containerVideo);
       figure.appendChild(figcaption);
     } else {

@@ -246,6 +246,11 @@ aside p {
   max-height: 500px;
 }
 
+.lightbox_card figure video::cue {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.7rem;
+  color: white;
+}
 .lightbox_card figure figcaption {
   color: #901c1c;
 }

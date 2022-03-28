@@ -39,7 +39,8 @@ function lightboxFactory(data) {
       trackVideo.setAttribute("kind", "subtitles");
       trackVideo.setAttribute("src", trackFile);
       trackVideo.setAttribute("srclang", "en");
-      trackVideo.setAttribute("label", "Anglais");
+      trackVideo.setAttribute("label", "English");
+      trackVideo.setAttribute("default", "true");
       containerVideo.appendChild(trackVideo);
       figure.appendChild(containerVideo);
       figure.appendChild(figcaption);

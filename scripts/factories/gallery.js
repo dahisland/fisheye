@@ -11,7 +11,9 @@ function galleryFactory(data) {
     // Photo
     const photo = document.createElement("img");
     photo.setAttribute("src", mediaPhoto);
-    photo.setAttribute("alt", "Photo de " + title);
+    photo.setAttribute("alt", title);
+    photo.setAttribute("role", "link");
+    photo.setAttribute("aria-label", title + ", closeup view");
     photo.setAttribute("data-id", id);
     photo.classList.add("images-gallery");
     // figaption
@@ -23,6 +25,7 @@ function galleryFactory(data) {
     // Container for likes
     const likePhoto = document.createElement("p");
     likePhoto.setAttribute("id", "likes" + id);
+    likePhoto.setAttribute("aria-label", "likes");
     likePhoto.innerHTML =
       '<span class="text-likes">' +
       likes +

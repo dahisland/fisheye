@@ -167,6 +167,7 @@ function getPhotographer() {
         // ------------------------------------------------------- //
         // ----------- Create button close
         const lightboxModalButton = document.createElement("button");
+        lightboxModalButton.setAttribute("aria-label", "close dialog");
         const lightboxButtonImg = document.createElement("img");
         lightboxButtonImg.setAttribute("src", "./assets/icons/close_brown.svg");
         lightboxButtonImg.setAttribute("alt", "Fermer la lightbox");

@@ -90,6 +90,9 @@
 #sorting-label:active {
   outline: none;
 }
+.gallery-sorting #sorting-label:focus {
+  background-color: #d3573c !important;
+}
 
 /* Gallery container */
 
@@ -333,7 +336,7 @@ aside p {
   margin-bottom: 2px;
   font-style: italic;
 }
-.modal .message-submit {
+.modal #message-submit {
   color: white;
   margin-top: 50px;
 }

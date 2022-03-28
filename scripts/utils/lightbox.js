@@ -12,11 +12,13 @@ function lightboxFactory(data) {
     const beforeButton = document.createElement("a");
     beforeButton.classList.add("left-button");
     beforeButton.setAttribute("href", "#");
+    beforeButton.setAttribute("aria-label", "previous image");
     beforeButton.innerHTML = '<span class="fas fa-angle-left"></span>';
 
     const nextButton = document.createElement("a");
     nextButton.classList.add("right-button");
     nextButton.setAttribute("href", "#");
+    nextButton.setAttribute("aria-label", "next image");
     nextButton.innerHTML = '<span class="fas fa-angle-right"></span>';
 
     // Creation figure for media & caption
@@ -37,6 +39,7 @@ function lightboxFactory(data) {
       const containerPicture = document.createElement("picture");
       const pictureImg = document.createElement("img");
       pictureImg.setAttribute("src", imagePhotographer);
+      pictureImg.setAttribute("alt", title);
       containerPicture.appendChild(pictureImg);
       figure.appendChild(containerPicture);
       figure.appendChild(figcaption);

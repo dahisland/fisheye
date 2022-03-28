@@ -23,10 +23,15 @@ function profileFactory(data) {
     //----------------------------------------- IMAGE
     const imgPhotographer = document.createElement("img");
     imgPhotographer.setAttribute("src", picture);
-    imgPhotographer.setAttribute("alt", "Photo de " + name);
+    imgPhotographer.setAttribute("alt", name);
     //------------------------------------------ TITLE FOR MODAL
     const titleModal = document.getElementById("modal-title");
+    const modalContent = document.querySelector(".modal");
     titleModal.innerHTML = "Contactez-moi <br>" + name;
+    titleModal.setAttribute("id", "title_form-contact");
+    modalContent.setAttribute("aria-labelledby", "title_form-contact");
+    modalContent.setAttribute("aria-label", "Contact me " + name);
+
     //
     // appendChild
     photographHeader.insertBefore(identityPhotographer, buttonContact);

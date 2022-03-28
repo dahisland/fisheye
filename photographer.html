@@ -26,7 +26,7 @@
     </div>
     <!-- HEADER -->
     <header>
-      <a href="./index.html" aria-label="Aller à la page d'accueil"
+      <a href="./index.html"
         ><img
           src="./assets/medias/logo.png"
           alt="Fisheye Home page"
@@ -37,7 +37,11 @@
     <main id="main">
       <!-- photograph profile -->
       <section class="photograph-header">
-        <button class="contact_button" onclick="displayModal()">
+        <button
+          class="contact_button"
+          aria-label="Contact me"
+          onclick="displayModal()"
+        >
           Contactez-moi
         </button>
       </section>
@@ -46,12 +50,29 @@
         <!-- sorting filter -->
         <form class="gallery-sorting">
           <label for="sorting-label">Trier par :</label>
-          <select name="tri" id="sorting-label" size="1">
-            <option value="popularite" id="option-popularite" selected>
+          <select name="tri" id="sorting-label" aria-label="Order by" size="1">
+            <option
+              value="popularite"
+              id="option-popularite"
+              aria-labelledby="sorting-label"
+              selected
+            >
               Popularité
             </option>
-            <option value="date" id="option-date">Date</option>
-            <option value="titre" id="option-title">Titre</option>
+            <option
+              value="date"
+              id="option-date"
+              aria-labelledby="sorting-label"
+            >
+              Date
+            </option>
+            <option
+              value="titre"
+              id="option-title"
+              aria-labelledby="sorting-label"
+            >
+              Titre
+            </option>
           </select>
         </form>
         <!-- images gallery -->
@@ -61,46 +82,59 @@
     <!-- MODALES -->
     <!-- Lightbox gallery -->
     <div class="lightbox_modal">
-      <div class="lightbox_card"></div>
+      <div
+        class="lightbox_card"
+        role="dialog"
+        aria-label="image closeup view"
+      ></div>
     </div>
     <!-- Form contact -->
     <div id="contact_modal">
-      <div class="modal">
+      <div class="modal" role="dialog">
         <header>
           <h2 id="modal-title">Contactez-moi</h2>
           <img
             src="./assets/icons/close.svg"
-            alt="Fermer le formulaire"
+            alt="Close contact form"
             onclick="closeModal()"
           />
         </header>
         <form id="contact-form">
           <div id="form-inputs">
-            <label for="firstname">Prénom</label>
+            <label for="firstname" id="firstname-label">Prénom</label>
             <input
               type="text"
               id="firstname"
               class="form-input"
               name="firstname"
+              aria-labelledby="firstname-label"
             />
-            <label for="lastname">Nom</label>
+            <label for="lastname" id="lastname-label">Nom</label>
             <input
               type="text"
               id="lastname"
               class="form-input"
               name="lastname"
+              aria-labelledby="lastname-label"
             />
-            <label for="email">Email</label>
-            <input type="email" id="email" class="form-input" name="email" />
-            <label for="message">Votre message</label>
+            <label for="email" id="email-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="form-input"
+              name="email"
+              aria-labelledby="email-label"
+            />
+            <label for="message" id="message-label">Votre message</label>
             <textarea
               id="message"
               name="message"
               class="form-input"
               rows="8"
+              aria-labelledby="message-label"
             ></textarea>
           </div>
-          <button id="submit-button">Envoyer</button>
+          <button id="submit-button" aria-label="send">Envoyer</button>
         </form>
       </div>
     </div>

@@ -12,11 +12,12 @@ const body = document.querySelector("body");
 
 // Create element paragraph for message when submit succeed
 const pSubmit = document.createElement("p");
-pSubmit.classList.add("message-submit");
+pSubmit.setAttribute("id", "message-submit");
+pSubmit.setAttribute("aria-label", "send succeed");
 pSubmit.innerHTML =
   "Votre message a bien été envoyé !<br>Nous vous recontacterons dès que possible.";
 modalContent.appendChild(pSubmit);
-const messageSubmit = document.querySelector(".message-submit");
+const messageSubmit = document.querySelector("#message-submit");
 
 // Regex
 const regexText =

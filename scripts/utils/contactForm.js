@@ -9,6 +9,11 @@ const inputEmail = document.querySelector("#email");
 const textarea = document.querySelector("#message");
 const inputs = document.querySelectorAll(".form-input");
 const body = document.querySelector("body");
+// Regex
+const regexText =
+  /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ,\'\.\s-]{2,50}$/g;
+const regexEmail =
+  /^([\w/\_\\!#$%&£'\]\[*+=?^`{|}~"()\.,:;<>@-]{1,}[\@][a-zA-Z]{1,}[\.][a-zA-Z]{2,})$/;
 
 //------------------------------------------ TITLE FOR MODAL
 function formContactTitle(data) {
@@ -30,26 +35,20 @@ pSubmit.innerHTML =
 modalContent.appendChild(pSubmit);
 const messageSubmit = document.querySelector("#message-submit");
 
-// Regex
-const regexText =
-  /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ,\'\.\s-]{2,50}$/g;
-const regexEmail =
-  /^([\w/\_\\!#$%&£'\]\[*+=?^`{|}~"()\.,:;<>@-]{1,}[\@][a-zA-Z]{1,}[\.][a-zA-Z]{2,})$/;
-
 // Create containers for error messages
 inputs.forEach((input) => {
-  const errorData = document.createElement("div");
-  errorData.classList.add("error-data");
-  inputsContainer.insertBefore(errorData, input);
-  errorData.style.display = "none";
+  const containerErrMessage = document.createElement("div");
+  containerErrMessage.classList.add("error-data");
+  inputsContainer.insertBefore(containerErrMessage, input);
+  containerErrMessage.style.display = "none";
 });
 
 // Variables for each message error
-const errorData = document.querySelectorAll(".error-data");
-const errorFirstname = errorData[0];
-const errorLastname = errorData[1];
-const errorEmail = errorData[2];
-const errorTextarea = errorData[3];
+const errorDatas = document.querySelectorAll(".error-data");
+const errorFirstname = errorDatas[0];
+const errorLastname = errorDatas[1];
+const errorEmail = errorDatas[2];
+const errorTextarea = errorDatas[3];
 
 // Functions to open/close modal
 function displayModal() {
@@ -58,7 +57,7 @@ function displayModal() {
   messageSubmit.style.display = "none";
   body.style.overflow = "hidden";
   contactForm.reset();
-  errorData.forEach((error) => {
+  errorDatas.forEach((error) => {
     error.style.display = "none";
   });
   inputs.forEach((input) => {

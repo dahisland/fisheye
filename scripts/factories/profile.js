@@ -36,3 +36,5 @@ function profileFactory(data) {
   return { getUserProfileDOM };
   // return { name, picture, getUserProfileDOM };
 }
+
+export { profileFactory };

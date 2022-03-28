@@ -33,6 +33,7 @@ function lightboxFactory(data) {
       containerVideo.setAttribute("src", videoPhotographer);
       containerVideo.setAttribute("controls", "");
       containerVideo.setAttribute("width", "100%");
+      containerVideo.setAttribute("aria-label", "video " + title);
       figure.appendChild(containerVideo);
       figure.appendChild(figcaption);
     } else {
@@ -50,5 +51,8 @@ function lightboxFactory(data) {
 
     return containerMedia;
   }
-  return { title, image, video, id, getLightboxCardDOM };
+  return { getLightboxCardDOM };
+  // return { title, image, video, id, getLightboxCardDOM };
 }
+
+export { lightboxFactory };

@@ -38,5 +38,8 @@ function galleryFactory(data) {
 
     return figure;
   }
-  return { title, image, likes, id, getGalleryCardDOM };
+  return { getGalleryCardDOM };
+  // return { title, image, likes, id, getGalleryCardDOM };
 }
+
+export { galleryFactory };

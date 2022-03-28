@@ -42,5 +42,8 @@ function cardsFactory(data) {
     div.appendChild(pPrice);
     return article;
   }
-  return { name, picture, getUserCardDOM };
+  return { getUserCardDOM };
+  // return { name, picture, getUserCardDOM };
 }
+
+export { cardsFactory };

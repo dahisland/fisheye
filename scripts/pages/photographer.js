@@ -1,3 +1,7 @@
+import * as profile from "../factories/profile.js";
+import * as gallery from "../factories/gallery.js";
+import * as lightbox from "../factories/lightbox.js";
+
 const urlParam = new URL(window.location.href);
 const idUrlParam = urlParam.searchParams.get("id");
 function getPhotographer() {
@@ -20,7 +24,7 @@ function getPhotographer() {
         photographers.forEach((photographer) => {
           const idProfile = photographer.id;
           if (idProfile == idUrlParam) {
-            const photographerModel = profileFactory(photographer);
+            const photographerModel = profile.profileFactory(photographer);
             photographerModel.getUserProfileDOM();
             formContactTitle(photographer);
           }
@@ -88,7 +92,7 @@ function getPhotographer() {
 
       async function getImagesGallery() {
         photographMedias.forEach((photographMedia) => {
-          const mediaModel = galleryFactory(photographMedia);
+          const mediaModel = gallery.galleryFactory(photographMedia);
           const galleryCardsDOM = mediaModel.getGalleryCardDOM();
           galleryContainer.appendChild(galleryCardsDOM);
         });
@@ -178,7 +182,7 @@ function getPhotographer() {
 
         // ----------- Get medias cards
         photographMedias.forEach((photographMedia) => {
-          const lightboxModele = lightboxFactory(photographMedia);
+          const lightboxModele = lightbox.lightboxFactory(photographMedia);
           const lightboxCardsDOM = lightboxModele.getLightboxCardDOM();
           lightboxCard.appendChild(lightboxCardsDOM);
         });
@@ -314,7 +318,6 @@ function getPhotographer() {
             addCssOrder();
             getLightbox(); // Display lightbox
           }
-          console.log(photographMedias);
         });
         return photographMedias;
       }

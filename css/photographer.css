@@ -248,7 +248,7 @@ aside p {
 
 .lightbox_card figure video::cue {
   font-family: "DM Sans", sans-serif;
-  font-size: 0.7rem;
+  font-size: 1rem;
   color: white;
 }
 .lightbox_card figure figcaption {
@@ -408,6 +408,9 @@ aside p {
     width: 0.8rem;
     height: 0.8rem;
   }
+  .lightbox_card figure video::cue {
+    font-size: 0.7rem;
+  }
 }
 
 @media screen and (max-width: 710px) {
@@ -455,5 +458,11 @@ aside p {
   }
   .modal .error-data {
     font-size: 0.6rem;
+  }
+  .lightbox_card {
+    width: 100%;
+  }
+  .lightbox_card figure video::cue {
+    font-size: 0.5rem;
   }
 }

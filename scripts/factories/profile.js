@@ -24,15 +24,7 @@ function profileFactory(data) {
     const imgPhotographer = document.createElement("img");
     imgPhotographer.setAttribute("src", picture);
     imgPhotographer.setAttribute("alt", name);
-    //------------------------------------------ TITLE FOR MODAL
-    const titleModal = document.getElementById("modal-title");
-    const modalContent = document.querySelector(".modal");
-    titleModal.innerHTML = "Contactez-moi <br>" + name;
-    titleModal.setAttribute("id", "title_form-contact");
-    modalContent.setAttribute("aria-labelledby", "title_form-contact");
-    modalContent.setAttribute("aria-label", "Contact me " + name);
 
-    //
     // appendChild
     photographHeader.insertBefore(identityPhotographer, buttonContact);
     identityPhotographer.appendChild(namePhotographer);
@@ -41,5 +33,6 @@ function profileFactory(data) {
     photographHeader.appendChild(imgPhotographer);
     return photographHeader;
   }
-  return { name, picture, getUserProfileDOM };
+  return { getUserProfileDOM };
+  // return { name, picture, getUserProfileDOM };
 }

@@ -10,6 +10,17 @@ const textarea = document.querySelector("#message");
 const inputs = document.querySelectorAll(".form-input");
 const body = document.querySelector("body");
 
+//------------------------------------------ TITLE FOR MODAL
+function formContactTitle(data) {
+  const { name } = data;
+  const titleModal = document.getElementById("modal-title");
+  const modalContent = document.querySelector(".modal");
+  titleModal.innerHTML = "Contactez-moi <br>" + name;
+  titleModal.setAttribute("id", "title_form-contact");
+  modalContent.setAttribute("aria-labelledby", "title_form-contact");
+  modalContent.setAttribute("aria-label", "Contact me " + name);
+}
+
 // Create element paragraph for message when submit succeed
 const pSubmit = document.createElement("p");
 pSubmit.setAttribute("id", "message-submit");
@@ -75,7 +86,7 @@ function validateInputs(inputReference, label, errorReference, regex) {
     return false;
   } else {
     errorReference.style.color = "green";
-    errorReference.innerHTML = '<i class="fa fa-check"></i>';
+    errorReference.innerHTML = '<span class="fa fa-check"></span>';
     inputReference.style.outline = "none";
     return true;
   }
@@ -91,7 +102,7 @@ function validateTextarea() {
     return false;
   } else {
     errorTextarea.style.color = "green";
-    errorTextarea.innerHTML = '<i class="fa fa-check"></i>';
+    errorTextarea.innerHTML = '<span class="fa fa-check"></span>';
     textarea.style.outline = "none";
     return true;
   }

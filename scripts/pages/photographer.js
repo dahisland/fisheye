@@ -22,6 +22,7 @@ function getPhotographer() {
           if (idProfile == idUrlParam) {
             const photographerModel = profileFactory(photographer);
             photographerModel.getUserProfileDOM();
+            formContactTitle(photographer);
           }
         });
       }

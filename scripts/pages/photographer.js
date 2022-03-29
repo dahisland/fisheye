@@ -42,7 +42,6 @@ function getPhotographer() {
           if (idProfile == idUrlParam) {
             const main = document.querySelector("main");
             const aside = document.createElement("aside");
-            aside.setAttribute("tabindex", "6");
             const pricePhotographer = document.createElement("p");
             pricePhotographer.classList.add("price-photographer");
             pricePhotographer.innerHTML = photographer.price + "€/jour";
@@ -110,20 +109,6 @@ function getPhotographer() {
         totalLikesContainer.innerHTML =
           sumLikes + ' <span class="fas fa-heart"></span>';
       }
-      // ------------ Function for attribute order ------------- //
-      // ------------------------------------------------------- //
-
-      // Add/change CSS attribute "order" and tabindex for each <figure> image gallery
-      async function addCssOrderAndTabindex() {
-        photographMedias.forEach((photographMedia) => {
-          const card = document.getElementById("card" + photographMedia.id);
-          card.style.order = photographMedias.indexOf(photographMedia);
-          card.childNodes[0].setAttribute(
-            "tabindex",
-            photographMedias.indexOf(photographMedia) + 9
-          );
-        });
-      }
 
       // ---------- Function for incrementation likes ---------- //
       // ------------------------------------------------------- //
@@ -157,13 +142,71 @@ function getPhotographer() {
         });
       }
 
+      // -------------------------------------------------------------------------- //
+      // ------------- FOCUS ACCESSIBILITY : TABINDEX FOR MAIN PAGE --------------- //
+      // -------------------------------------------------------------------------- //
+
+      const logo = document.querySelector(".logo");
+      const mainTitle = document.querySelector("h1");
+      const identityInfos = document.querySelector(".identity > div");
+      const contactButton = document.querySelector(".contact_button");
+      const photoProfile = document.querySelector(".photograph-header > img");
+      const aside = document.querySelector("aside");
+      const sortingLabel = document.querySelector(".gallery-sorting > label");
+      const select = document.querySelector("#sorting-label");
+
+      let arrayTabindexPage = [];
+      arrayTabindexPage.push(logo);
+      arrayTabindexPage.push(mainTitle);
+      arrayTabindexPage.push(identityInfos);
+      arrayTabindexPage.push(contactButton);
+      arrayTabindexPage.push(photoProfile);
+      arrayTabindexPage.push(aside);
+      arrayTabindexPage.push(sortingLabel);
+      arrayTabindexPage.push(select);
+
+      async function getTabindexPage() {
+        let n = 0;
+        while (n < arrayTabindexPage.length) {
+          arrayTabindexPage[n].setAttribute("tabindex", n + 1);
+          arrayTabindexPage[n].classList.add("page-elements_focus");
+          n++;
+        }
+      }
+
+      async function addTabindexImgGallery() {
+        photographMedias.forEach((photographMedia) => {
+          const imgGallery = document.getElementById(
+            "card" + photographMedia.id
+          );
+          imgGallery.childNodes[0].setAttribute(
+            "tabindex",
+            photographMedias.indexOf(photographMedia) + 9
+          );
+          imgGallery.childNodes[0].classList.add("page-elements_focus");
+        });
+      }
+
+      // ----- Function attribute order for images gallery ----- //
+      // ------------------------------------------------------- //
+
+      // Add/change CSS attribute "order" for each <figure> image gallery
+      async function addCssOrder() {
+        photographMedias.forEach((photographMedia) => {
+          const card = document.getElementById("card" + photographMedia.id);
+          card.style.order = photographMedias.indexOf(photographMedia);
+        });
+      }
+
       // ----------------- Get section gallery ----------------- //
       // ------------------------------------------------------- //
 
       getImagesGallery();
-      addCssOrderAndTabindex();
+      addCssOrder();
+      addTabindexImgGallery();
       incrementLikes();
       getTotalLikes();
+      getTabindexPage();
 
       // -------------------------------------------------------------------------- //
       // --------------------------- DISPLAY LIGHTBOX ----------------------------- //
@@ -218,26 +261,42 @@ function getPhotographer() {
           arrayLeftButtons.push(leftButton);
         });
 
-        // --------------------- Active media -------------------- //
+        // ------------- Active media lightbox events ------------ //
         // ------------------------------------------------------- //
 
-        arrayCardsLightbox.forEach((arrayCardLightbox) => {
+        // Function to add/remove class active
+        function openLightboxActiveMedia(imgGallery, arrayCard) {
+          lightboxModal.style.display = "block";
+          body.style.overflow = "hidden";
+          if (
+            imgGallery.getAttribute("data-id") ==
+            arrayCard.getAttribute("data-id")
+          ) {
+            arrayCard.classList.add("lightbox_card--active");
+          } else {
+            arrayCard.classList.remove("lightbox_card--active");
+          }
+        }
+
+        // Open active media card lightbox on event
+        for (let i = 0; i < arrayCardsLightbox.length; i++) {
+          let currentCardLightbox = arrayCardsLightbox[i];
+          let nextCardLightbox = arrayCardsLightbox[i + 1];
+
           const imagesGallery = document.querySelectorAll(".images-gallery");
           imagesGallery.forEach((imageGallery) => {
             imageGallery.addEventListener("click", () => {
-              lightboxModal.style.display = "block";
-              body.style.overflow = "hidden";
-              if (
-                imageGallery.getAttribute("data-id") ==
-                arrayCardLightbox.getAttribute("data-id")
-              ) {
-                arrayCardLightbox.classList.add("lightbox_card--active");
-              } else {
-                arrayCardLightbox.classList.remove("lightbox_card--active");
+              openLightboxActiveMedia(imageGallery, currentCardLightbox);
+            });
+            imageGallery.addEventListener("keydown", (e) => {
+              if (e.code === "Enter") {
+                openLightboxActiveMedia(imageGallery, currentCardLightbox);
+                currentCardLightbox.setAttribute("tabindex", "-1");
+                currentCardLightbox.focus();
               }
             });
           });
-        });
+        }
 
         // --------------- Function for nav buttons -------------- //
         // ------------------------------------------------------- //
@@ -298,7 +357,8 @@ function getPhotographer() {
             photographMedias = photographMedias.sort(
               (a, b) => a.likes - b.likes
             );
-            addCssOrderAndTabindex();
+            addCssOrder();
+            addTabindexImgGallery();
             getLightbox(); // Display lightbox
           }
           if (optionDate.selected == true) {
@@ -311,7 +371,8 @@ function getPhotographer() {
               return dateA - dateB;
             }
             photographMedias = photographMedias.sort(dateSorting);
-            addCssOrderAndTabindex();
+            addCssOrder();
+            addTabindexImgGallery();
             getLightbox(); // Display lightbox
           }
           if (optionTitle.selected == true) {
@@ -321,7 +382,8 @@ function getPhotographer() {
             photographMedias = photographMedias.sort((a, b) =>
               a.title.localeCompare(b.title)
             );
-            addCssOrderAndTabindex();
+            addCssOrder();
+            addTabindexImgGallery();
             getLightbox(); // Display lightbox
           }
         });

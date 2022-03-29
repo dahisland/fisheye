@@ -22,7 +22,7 @@
     </div>
     <!-- HEADER -->
     <header>
-      <a href="./index.html" tabindex="1"
+      <a href="./index.html"
         ><img
           src="./assets/medias/logo.png"
           alt="Fisheye Home page"
@@ -37,7 +37,6 @@
           class="contact_button"
           aria-label="Contact me"
           onclick="displayModal()"
-          tabindex="4"
         >
           Contactez-moi
         </button>
@@ -46,14 +45,8 @@
       <section class="photograph-gallery">
         <!-- sorting filter -->
         <form class="gallery-sorting">
-          <label for="sorting-label" tabindex="7">Trier par :</label>
-          <select
-            name="tri"
-            id="sorting-label"
-            aria-label="Order by"
-            size="1"
-            tabindex="8"
-          >
+          <label for="sorting-label">Trier par :</label>
+          <select name="tri" id="sorting-label" aria-label="Order by" size="1">
             <option
               value="popularite"
               id="option-popularite"

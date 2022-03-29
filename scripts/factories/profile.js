@@ -11,11 +11,9 @@ function profileFactory(data) {
     identityPhotographer.classList.add("identity");
     // Name photographer
     const namePhotographer = document.createElement("h1");
-    namePhotographer.setAttribute("tabindex", "2");
     namePhotographer.textContent = name;
     // Localisation photographer
     const identityInfo = document.createElement("div");
-    identityInfo.setAttribute("tabindex", "3");
     const pLocalisation = document.createElement("p");
     pLocalisation.classList.add("p_localisation");
     pLocalisation.textContent = city + ", " + country;
@@ -25,7 +23,6 @@ function profileFactory(data) {
     pTagline.textContent = tagline;
     //----------------------------------------- IMAGE
     const imgPhotographer = document.createElement("img");
-    imgPhotographer.setAttribute("tabindex", "5");
     imgPhotographer.setAttribute("src", picture);
     imgPhotographer.setAttribute("alt", name);
 

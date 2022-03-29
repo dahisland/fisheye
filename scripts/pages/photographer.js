@@ -42,6 +42,7 @@ function getPhotographer() {
           if (idProfile == idUrlParam) {
             const main = document.querySelector("main");
             const aside = document.createElement("aside");
+            aside.setAttribute("tabindex", "6");
             const pricePhotographer = document.createElement("p");
             pricePhotographer.classList.add("price-photographer");
             pricePhotographer.innerHTML = photographer.price + "€/jour";
@@ -112,11 +113,15 @@ function getPhotographer() {
       // ------------ Function for attribute order ------------- //
       // ------------------------------------------------------- //
 
-      // Add/change CSS attribute "order" for each <figure> image gallery
-      async function addCssOrder() {
+      // Add/change CSS attribute "order" and tabindex for each <figure> image gallery
+      async function addCssOrderAndTabindex() {
         photographMedias.forEach((photographMedia) => {
           const card = document.getElementById("card" + photographMedia.id);
           card.style.order = photographMedias.indexOf(photographMedia);
+          card.childNodes[0].setAttribute(
+            "tabindex",
+            photographMedias.indexOf(photographMedia) + 9
+          );
         });
       }
 
@@ -156,7 +161,7 @@ function getPhotographer() {
       // ------------------------------------------------------- //
 
       getImagesGallery();
-      addCssOrder();
+      addCssOrderAndTabindex();
       incrementLikes();
       getTotalLikes();
 
@@ -277,6 +282,7 @@ function getPhotographer() {
         }
         closeLightbox();
       }
+
       getLightbox();
 
       // -------------------------------------------------------------------------- //
@@ -292,7 +298,7 @@ function getPhotographer() {
             photographMedias = photographMedias.sort(
               (a, b) => a.likes - b.likes
             );
-            addCssOrder();
+            addCssOrderAndTabindex();
             getLightbox(); // Display lightbox
           }
           if (optionDate.selected == true) {
@@ -305,7 +311,7 @@ function getPhotographer() {
               return dateA - dateB;
             }
             photographMedias = photographMedias.sort(dateSorting);
-            addCssOrder();
+            addCssOrderAndTabindex();
             getLightbox(); // Display lightbox
           }
           if (optionTitle.selected == true) {
@@ -315,7 +321,7 @@ function getPhotographer() {
             photographMedias = photographMedias.sort((a, b) =>
               a.title.localeCompare(b.title)
             );
-            addCssOrder();
+            addCssOrderAndTabindex();
             getLightbox(); // Display lightbox
           }
         });

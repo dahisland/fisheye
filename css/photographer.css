@@ -110,6 +110,10 @@
 .gallery-cards figure img:hover {
   box-shadow: 0px 1px 10px rgba(3, 3, 3, 0.6);
 }
+
+.gallery-cards figure:hover .gallery-cards figure img {
+  box-shadow: 0px 1px 10px rgba(3, 3, 3, 0.6);
+}
 .gallery-cards figure img {
   object-fit: cover;
   object-position: center;

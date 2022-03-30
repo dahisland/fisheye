@@ -142,61 +142,6 @@ function getPhotographer() {
         });
       }
 
-      // -------------------------------------------------------------------------- //
-      // ------------- FOCUS ACCESSIBILITY : TABINDEX FOR MAIN PAGE --------------- //
-      // -------------------------------------------------------------------------- //
-
-      const logo = document.querySelector(".page-header > a");
-      const mainTitle = document.querySelector("h1");
-      const identityInfos = document.querySelector(".identity > div");
-      const contactButton = document.querySelector(".contact_button");
-      const photoProfile = document.querySelector(".photograph-header > img");
-      const aside = document.querySelector("aside");
-      const sortingLabel = document.querySelector(".gallery-sorting > label");
-      const select = document.querySelector("#sorting-label");
-
-      let arrayTabindexPage = [];
-      arrayTabindexPage.push(logo);
-      arrayTabindexPage.push(mainTitle);
-      arrayTabindexPage.push(identityInfos);
-      arrayTabindexPage.push(contactButton);
-      arrayTabindexPage.push(photoProfile);
-      arrayTabindexPage.push(aside);
-      arrayTabindexPage.push(sortingLabel);
-      arrayTabindexPage.push(select);
-
-      async function getTabindexPage() {
-        let n = 0;
-        while (n < arrayTabindexPage.length) {
-          arrayTabindexPage[n].setAttribute("tabindex", n + 1);
-          arrayTabindexPage[n].classList.add("page-elements_focus");
-          n++;
-        }
-      }
-
-      async function addTabindexImgGallery() {
-        photographMedias.forEach((photographMedia) => {
-          const imgGallery = document.getElementById(
-            "card" + photographMedia.id
-          );
-          imgGallery.childNodes[0].setAttribute(
-            "tabindex",
-            photographMedias.indexOf(photographMedia) + 9
-          );
-          imgGallery.childNodes[0].classList.add("page-elements_focus");
-        });
-      }
-
-      async function removeTabindexImgGallery() {
-        photographMedias.forEach((photographMedia) => {
-          const imgGallery = document.getElementById(
-            "card" + photographMedia.id
-          );
-          imgGallery.childNodes[0].setAttribute("tabindex", "-1");
-          imgGallery.childNodes[0].classList.remove("page-elements_focus");
-        });
-      }
-
       // ----- Function attribute order for images gallery ----- //
       // ------------------------------------------------------- //
 
@@ -213,10 +158,76 @@ function getPhotographer() {
 
       getImagesGallery();
       addCssOrder();
-      addTabindexImgGallery();
       incrementLikes();
       getTotalLikes();
+
+      // -------------------------------------------------------------------------- //
+      // ------------- FOCUS ACCESSIBILITY : TABINDEX FOR MAIN PAGE --------------- //
+      // -------------------------------------------------------------------------- //
+
+      const logo = document.querySelector(".page-header > a");
+      const mainTitle = document.querySelector("h1");
+      const identityInfos = document.querySelector(".identity > div");
+      const contactButton = document.querySelector(".contact_button");
+      const photoProfile = document.querySelector(".photograph-header > img");
+      const aside = document.querySelector("aside");
+      const sortingLabel = document.querySelector(".gallery-sorting > label");
+      const select = document.querySelector("#sorting-label");
+
+      // - Array for elements focused in page photographer (except gallery) - //
+      // -------------------------------------------------------------------- //
+
+      let arrayTabindexPage = [];
+      arrayTabindexPage.push(logo);
+      arrayTabindexPage.push(mainTitle);
+      arrayTabindexPage.push(identityInfos);
+      arrayTabindexPage.push(contactButton);
+      arrayTabindexPage.push(photoProfile);
+      arrayTabindexPage.push(aside);
+      arrayTabindexPage.push(sortingLabel);
+      arrayTabindexPage.push(select);
+
+      // ----- Tabindex for elements page photographer (except gallery) ----- //
+      // -------------------------------------------------------------------- //
+
+      async function getTabindexPage() {
+        let n = 0;
+        while (n < arrayTabindexPage.length) {
+          arrayTabindexPage[n].setAttribute("tabindex", n + 1);
+          n++;
+        }
+      }
+      // ------------------ Tabindex for elements gallery ------------------ //
+      // ------------------------------------------------------------------- //
+
+      async function addTabindexImgGallery() {
+        photographMedias.forEach((photographMedia) => {
+          const imgGallery = document.getElementById(
+            "card" + photographMedia.id
+          );
+          imgGallery.childNodes[0].setAttribute(
+            "tabindex",
+            photographMedias.indexOf(photographMedia) + 9
+          );
+        });
+      }
+
+      // --------------- Reset tabindex for elements gallery --------------- //
+      // ------------------------------------------------------------------- //
+
+      async function removeTabindexImgGallery() {
+        photographMedias.forEach((photographMedia) => {
+          const imgGallery = document.getElementById(
+            "card" + photographMedia.id
+          );
+          imgGallery.childNodes[0].setAttribute("tabindex", "-1");
+        });
+      }
+      // ------------------- Call functions for tabindex ------------------- //
+      // ------------------------------------------------------------------- //
+
       getTabindexPage();
+      addTabindexImgGallery();
 
       // -------------------------------------------------------------------------- //
       // --------------------------- DISPLAY LIGHTBOX ----------------------------- //
@@ -228,17 +239,20 @@ function getPhotographer() {
       async function getLightbox() {
         // ----------------- Generate medias cards --------------- //
         // ------------------------------------------------------- //
+
         // ----------- Create button close
         const lightboxModalButton = document.createElement("button");
         lightboxModalButton.setAttribute("aria-label", "close dialog");
         lightboxModalButton.setAttribute("tabindex", "-1");
-        lightboxModalButton.classList.add("page-elements_focus");
         const lightboxButtonImg = document.createElement("img");
         lightboxButtonImg.setAttribute("src", "./assets/icons/close_brown.svg");
         lightboxButtonImg.setAttribute("alt", "Fermer la lightbox");
         lightboxButtonImg.setAttribute("fill", "red");
         lightboxModalButton.appendChild(lightboxButtonImg);
         lightboxCard.appendChild(lightboxModalButton);
+        const buttonCloseLightbox = document.querySelector(
+          ".lightbox_card > button"
+        );
 
         // ----------- Get medias cards
         photographMedias.forEach((photographMedia) => {
@@ -273,54 +287,91 @@ function getPhotographer() {
           arrayLeftButtons.push(leftButton);
         });
 
+        // ----------- Generate style css focus for elements on focus and focusout
+        function focusStyle(elementFocused) {
+          elementFocused.addEventListener("focus", () => {
+            elementFocused.classList.add("page-elements_focus");
+          });
+          elementFocused.addEventListener("focusout", () => {
+            elementFocused.classList.remove("page-elements_focus");
+          });
+        }
+
+        arrayTabindexPage.forEach((tabindexPage) => {
+          focusStyle(tabindexPage);
+        });
+        const imgsGallery = document.querySelectorAll(
+          ".gallery-cards > figure > img"
+        );
+        imgsGallery.forEach((imgGallery) => {
+          focusStyle(imgGallery);
+        });
+        rightButtons.forEach((rightButton) => {
+          focusStyle(rightButton);
+        });
+        leftButtons.forEach((leftButton) => {
+          focusStyle(leftButton);
+        });
+        focusStyle(buttonCloseLightbox);
+        arrayCardsLightbox.forEach((cardLightbox) => {
+          focusStyle(cardLightbox.childNodes[1].childNodes[0].childNodes[0]);
+          focusStyle(cardLightbox.childNodes[1].childNodes[1]);
+        });
+
         // ------------- Active media lightbox events ------------ //
         // ------------------------------------------------------- //
         let arrayFocusLightbox = [];
 
-        // Function to add/remove class active
+        // Function called for events opening lightbox
         function openLightboxActiveMedia(imgGallery, arrayCard) {
           const pageHeader = document.querySelector(".page-header");
           const main = document.querySelector("main");
-          const buttonCloseLightbox = document.querySelector(
-            ".lightbox_card > button"
-          );
           let leftBtn = arrayCard.childNodes[0];
           let rightBtn = arrayCard.childNodes[2];
           let mediaLightbox =
             arrayCard.childNodes[1].childNodes[0].childNodes[0];
           let captionMedia = arrayCard.childNodes[1].childNodes[1];
 
-          pageHeader.setAttribute("aria-hidden", "true");
-          main.setAttribute("aria-hidden", "true");
+          // Display modale lightbox
           lightboxModal.style.display = "block";
           body.style.overflow = "hidden";
+
+          // Accessibility modifications
+          pageHeader.setAttribute("aria-hidden", "true");
+          main.setAttribute("aria-hidden", "true");
           arrayTabindexPage.forEach((tabindexPage) => {
             tabindexPage.setAttribute("tabindex", "-1");
           });
+          // Change tabindex for images gallery
           removeTabindexImgGallery();
+          // Add tabindex for button close modale lightbox
           buttonCloseLightbox.setAttribute("tabindex", "6");
-          buttonCloseLightbox.classList.add("page-elements_focus");
+
           if (
             imgGallery.getAttribute("data-id") ==
             arrayCard.getAttribute("data-id")
           ) {
+            // Construct array containing elements lightbox focused
             arrayFocusLightbox.push(arrayCard);
             arrayFocusLightbox.push(mediaLightbox);
             arrayFocusLightbox.push(captionMedia);
             arrayFocusLightbox.push(leftBtn);
             arrayFocusLightbox.push(rightBtn);
 
+            // Add tabindex for elements focused in lightbox
             let x = 0;
             while (x < arrayFocusLightbox.length) {
               arrayFocusLightbox[x].setAttribute("tabindex", x + 1);
-              arrayFocusLightbox[x].classList.add("page-elements_focus");
               x++;
             }
-
+            // Add class active (change z-index)
             arrayCard.classList.add("lightbox_card--active");
+            // Place focus on card active
             arrayCard.focus();
           } else {
+            // Remove class active for cards non actives
             arrayCard.classList.remove("lightbox_card--active");
+            // Change tabindex for elements in cards non active
             arrayCard.setAttribute("tabindex", "-1");
             mediaLightbox.setAttribute("tabindex", "-1");
             captionMedia.setAttribute("tabindex", "-1");
@@ -329,11 +380,11 @@ function getPhotographer() {
           }
         }
 
-        // Open active media card lightbox on event
+        // Call active media card lightbox on events
         for (let i = 0; i < arrayCardsLightbox.length; i++) {
           let currentCardLightbox = arrayCardsLightbox[i];
-
           const imagesGallery = document.querySelectorAll(".images-gallery");
+
           imagesGallery.forEach((imageGallery) => {
             imageGallery.addEventListener("click", () => {
               openLightboxActiveMedia(imageGallery, currentCardLightbox);
@@ -349,69 +400,65 @@ function getPhotographer() {
         // --------------- Function for nav buttons -------------- //
         // ------------------------------------------------------- //
 
-        async function eventNavButtons(
-          operatorCard,
-          arrayButtons,
-          indexDisabled
-        ) {
-          for (let i = 0; i < arrayCardsLightbox.length; i++) {
+        arrayLeftButtons[0].classList.add("disabled");
+        arrayRightButtons[arrayRightButtons.length - 1].classList.add(
+          "disabled"
+        );
+
+        function navPreviousNext(iValue, ArrBtn, iNext, arrow) {
+          for (let i = iValue; i < arrayCardsLightbox.length; i++) {
             let currentCard = arrayCardsLightbox[i];
-            let nextCard = arrayCardsLightbox[i + operatorCard];
-            let currentButton = arrayButtons[i];
+            let currentButton = ArrBtn[i];
+            let nextCard = arrayCardsLightbox[i + iNext];
             let indexCurrentCard = arrayCardsLightbox.indexOf(
               arrayCardsLightbox[i]
             );
-            let indexCurrentButton = arrayButtons.indexOf(arrayButtons[i]);
-
-            if (indexCurrentCard === indexCurrentButton) {
-              currentButton.addEventListener("click", () => {
+            let indexCurrentButton = ArrBtn.indexOf(ArrBtn[i]);
+            function eventNavBtns() {
+              if (indexCurrentCard === indexCurrentButton) {
                 currentCard.classList.remove("lightbox_card--active");
                 nextCard.classList.add("lightbox_card--active");
-              });
-              currentButton.addEventListener("keydown", (e) => {
-                if (e.code == "Enter" && nextCard !== undefined) {
-                  let mediaLightbox =
-                    nextCard.childNodes[1].childNodes[0].childNodes[0];
-                  let captionMedia = nextCard.childNodes[1].childNodes[1];
-                  let leftBtn = nextCard.childNodes[0];
-                  let rightBtn = nextCard.childNodes[2];
 
-                  currentCard.classList.remove("lightbox_card--active");
-                  nextCard.classList.add("lightbox_card--active");
+                let mediaLightbox =
+                  nextCard.childNodes[1].childNodes[0].childNodes[0];
+                let captionMedia = nextCard.childNodes[1].childNodes[1];
+                let leftBtn = nextCard.childNodes[0];
+                let rightBtn = nextCard.childNodes[2];
 
-                  arrayFocusLightbox.forEach((focusLightbox) => {
-                    focusLightbox.setAttribute("tabindex", "-1");
-                    focusLightbox.classList.remove("page-elements_focus");
-                  });
+                arrayFocusLightbox.forEach((focusLightbox) => {
+                  focusLightbox.setAttribute("tabindex", "-1");
+                });
 
-                  arrayFocusLightbox.length = 0;
-                  arrayFocusLightbox.push(nextCard);
-                  arrayFocusLightbox.push(mediaLightbox);
-                  arrayFocusLightbox.push(captionMedia);
-                  arrayFocusLightbox.push(leftBtn);
-                  arrayFocusLightbox.push(rightBtn);
+                arrayFocusLightbox.length = 0;
+                arrayFocusLightbox.push(nextCard);
+                arrayFocusLightbox.push(mediaLightbox);
+                arrayFocusLightbox.push(captionMedia);
+                arrayFocusLightbox.push(leftBtn);
+                arrayFocusLightbox.push(rightBtn);
 
-                  let x = 0;
-                  while (x < arrayFocusLightbox.length) {
-                    arrayFocusLightbox[x].setAttribute("tabindex", x + 1);
-                    arrayFocusLightbox[x].classList.add("page-elements_focus");
-                    x++;
-                  }
-                  nextCard.focus();
-                } else if (e.code == "Enter" && nextCard === undefined) {
-                  e.preventDefault();
+                let x = 0;
+                while (x < arrayFocusLightbox.length) {
+                  arrayFocusLightbox[x].setAttribute("tabindex", x + 1);
+                  x++;
                 }
-              });
+                nextCard.focus();
+              }
             }
-            if (indexCurrentCard === indexDisabled) {
-              currentButton.classList.add("disabled");
-            }
+            currentButton.addEventListener("click", () => {
+              eventNavBtns();
+            });
+            currentCard.addEventListener("keydown", (e) => {
+              if (e.code === arrow && nextCard !== undefined) {
+                eventNavBtns();
+              }
+            });
           }
         }
-        // ----------- Nav left button
-        eventNavButtons(-1, arrayLeftButtons, 0);
-        // ----------- Nav right button
-        eventNavButtons(+1, arrayRightButtons, arrayCardsLightbox.length - 1);
+
+        // Nav with left button
+        navPreviousNext(1, arrayLeftButtons, -1, "ArrowLeft");
+        // Nav with right button
+        navPreviousNext(0, arrayRightButtons, 1, "ArrowRight");
 
         // ------------------ Event close lightbox --------------- //
         // ------------------------------------------------------- //

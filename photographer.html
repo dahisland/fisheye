@@ -85,58 +85,69 @@
       ></div>
     </div>
     <!-- Form contact -->
-    <div id="contact_modal">
-      <div class="modal" role="dialog">
+    <div id="contact_modal" role="dialog">
+      <div class="modal" aria-label="form contact" tabindex="1">
         <header>
-          <h2 id="modal-title">Contactez-moi</h2>
+          <h2 id="modal-title" tabindex="2">Contactez-moi</h2>
           <img
             src="./assets/icons/close.svg"
             alt="Close contact form"
+            tabindex="12"
             onclick="closeModal()"
           />
         </header>
         <form id="contact-form">
           <div id="form-inputs">
-            <label for="firstname" id="firstname-label">Prénom</label>
+            <label for="firstname" id="firstname-label" tabindex="3"
+              >Prénom</label
+            >
             <input
               type="text"
               id="firstname"
               class="form-input"
               name="firstname"
               aria-labelledby="firstname-label"
+              tabindex="4"
             />
-            <label for="lastname" id="lastname-label">Nom</label>
+            <label for="lastname" id="lastname-label" tabindex="5">Nom</label>
             <input
               type="text"
               id="lastname"
               class="form-input"
               name="lastname"
               aria-labelledby="lastname-label"
+              tabindex="6"
             />
-            <label for="email" id="email-label">Email</label>
+            <label for="email" id="email-label" tabindex="7">Email</label>
             <input
               type="email"
               id="email"
               class="form-input"
               name="email"
               aria-labelledby="email-label"
+              tabindex="8"
             />
-            <label for="message" id="message-label">Votre message</label>
+            <label for="message" id="message-label" tabindex="9"
+              >Votre message</label
+            >
             <textarea
               id="message"
               name="message"
               class="form-input"
               rows="8"
               aria-labelledby="message-label"
+              tabindex="10"
             ></textarea>
           </div>
-          <button id="submit-button" aria-label="send">Envoyer</button>
+          <button id="submit-button" aria-label="send" tabindex="11">
+            Envoyer
+          </button>
         </form>
       </div>
     </div>
     <script src="./scripts/utils/loader.js"></script>
-    <script src="./scripts/utils/contactForm.js"></script>
     <script src="./scripts/pages/photographer.js" type="module"></script>
+    <script src="./scripts/utils/contactForm.js"></script>
     <!-- SCRIPT FONT AWESOME -->
     <script
       src="https://kit.fontawesome.com/e2e7cc2238.js"

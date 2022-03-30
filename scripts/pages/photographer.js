@@ -178,14 +178,18 @@ function getPhotographer() {
       // -------------------------------------------------------------------- //
 
       let arrayTabindexPage = [];
-      arrayTabindexPage.push(logo);
-      arrayTabindexPage.push(mainTitle);
-      arrayTabindexPage.push(identityInfos);
-      arrayTabindexPage.push(contactButton);
-      arrayTabindexPage.push(photoProfile);
-      arrayTabindexPage.push(aside);
-      arrayTabindexPage.push(sortingLabel);
-      arrayTabindexPage.push(select);
+      function construcArrayTabindex() {
+        arrayTabindexPage.push(logo);
+        arrayTabindexPage.push(mainTitle);
+        arrayTabindexPage.push(identityInfos);
+        arrayTabindexPage.push(contactButton);
+        arrayTabindexPage.push(photoProfile);
+        arrayTabindexPage.push(aside);
+        arrayTabindexPage.push(sortingLabel);
+        arrayTabindexPage.push(select);
+      }
+
+      construcArrayTabindex();
 
       // ----- Tabindex for elements page photographer (except gallery) ----- //
       // -------------------------------------------------------------------- //
@@ -197,6 +201,7 @@ function getPhotographer() {
           n++;
         }
       }
+
       // ------------------ Tabindex for elements gallery ------------------ //
       // ------------------------------------------------------------------- //
 
@@ -228,6 +233,28 @@ function getPhotographer() {
 
       getTabindexPage();
       addTabindexImgGallery();
+
+      // ----------- Events tabindex for open/close Contact modal ---------- //
+      // ------------------------------------------------------------------- //
+
+      const closeContactModal = document.querySelector(".modal > header > img");
+      contactButton.addEventListener("click", () => {
+        arrayTabindexPage.forEach((tabindexPage) => {
+          tabindexPage.setAttribute("tabindex", "-1");
+        });
+        removeTabindexImgGallery();
+      });
+      closeContactModal.addEventListener("click", () => {
+        getTabindexPage();
+        addTabindexImgGallery();
+      });
+      closeContactModal.addEventListener("keydown", (e) => {
+        e.preventDefault();
+        if (e.code == "Enter") {
+          getTabindexPage();
+          addTabindexImgGallery();
+        }
+      });
 
       // -------------------------------------------------------------------------- //
       // --------------------------- DISPLAY LIGHTBOX ----------------------------- //

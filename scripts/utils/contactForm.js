@@ -2,6 +2,9 @@ const modal = document.getElementById("contact_modal");
 const modalContent = document.querySelector(".modal");
 const btnSubmit = document.querySelector("#submit-button");
 const contactForm = document.querySelector("#contact-form");
+const contactButton = document.querySelector(".contact_button");
+const closeContactModal = document.querySelector(".modal > header > img");
+const titleContactModal = document.querySelector(".modal > header > h2");
 const inputsContainer = document.querySelector("#form-inputs");
 const inputFirstname = document.querySelector("#firstname");
 const inputLastname = document.querySelector("#lastname");
@@ -9,6 +12,7 @@ const inputEmail = document.querySelector("#email");
 const textarea = document.querySelector("#message");
 const inputs = document.querySelectorAll(".form-input");
 const body = document.querySelector("body");
+
 // Regex
 const regexText =
   /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ,\'\.\s-]{2,50}$/g;
@@ -64,11 +68,20 @@ function displayModal() {
     input.style.outline = "none";
   });
   textarea.style.outline = "none";
+  modalContent.focus();
 }
 function closeModal() {
+  contactButton.focus();
   modal.style.display = "none";
   body.style.overflow = "auto";
 }
+
+closeContactModal.addEventListener("keydown", (e) => {
+  e.preventDefault();
+  if (e.code == "Enter") {
+    closeModal();
+  }
+});
 
 // Function for validation form inputs
 function validateInputs(inputReference, label, errorReference, regex) {

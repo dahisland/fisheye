@@ -269,6 +269,12 @@ aside p {
   overflow: hidden;
 }
 
+.modal:focus {
+  border: none;
+  outline: 2px dotted #db8876;
+  outline-offset: 10px;
+}
+
 .modal header {
   display: flex;
   flex-wrap: nowrap;
@@ -283,6 +289,11 @@ aside p {
   width: 25px;
   margin-top: 20px;
 }
+.modal header img:focus {
+  border: none;
+  outline: 2px solid #901c1c;
+  outline-offset: 5px;
+}
 
 .modal header h2 {
   margin: 0;
@@ -290,6 +301,11 @@ aside p {
   font-size: 2.5rem;
   font-weight: normal;
   text-align: left;
+}
+.modal header h2:focus {
+  border: none;
+  outline: 2px solid #901c1c;
+  outline-offset: 5px;
 }
 
 .modal form {
@@ -303,6 +319,12 @@ aside p {
   color: #312e2e;
   font-size: 1.5rem;
   margin-bottom: 2px;
+}
+
+.modal form label:focus {
+  border: none;
+  outline: 2px solid #901c1c;
+  outline-offset: 5px;
 }
 
 .modal form div#form-input {
@@ -319,9 +341,13 @@ aside p {
   padding: 10px;
   width: 100%;
   height: 50px;
-  border: none;
+  border: 2px solid transparent;
   border-radius: 5px;
   margin-bottom: 2px;
+}
+
+.modal form input:focus {
+  border: 2px solid #901c1c;
 }
 .modal form textarea {
   font-family: "DM Sans", sans-serif;
@@ -329,9 +355,12 @@ aside p {
   padding: 10px;
   width: 100%;
   resize: none;
-  border: none;
+  border: 2px solid transparent;
   border-radius: 5px;
   margin-bottom: 25px;
+}
+.modal form textarea:focus {
+  border: 2px solid #901c1c;
 }
 .modal .error-data {
   font-size: 0.8rem;
@@ -352,6 +381,11 @@ aside p {
   background-color: #901c1c;
   border-radius: 5px;
   cursor: pointer;
+}
+.modal #submit-button:focus {
+  border: none;
+  outline: 2px solid #901c1c;
+  outline-offset: 5px;
 }
 
 /* FOCUS  */

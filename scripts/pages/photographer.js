@@ -297,6 +297,15 @@ function getPhotographer() {
           });
         }
 
+        function focusStyleLight(elementFocused) {
+          elementFocused.addEventListener("focus", () => {
+            elementFocused.classList.add("page-elements_focus--simple");
+          });
+          elementFocused.addEventListener("focusout", () => {
+            elementFocused.classList.remove("page-elements_focus--simple");
+          });
+        }
+
         arrayTabindexPage.forEach((tabindexPage) => {
           focusStyle(tabindexPage);
         });
@@ -314,6 +323,7 @@ function getPhotographer() {
         });
         focusStyle(buttonCloseLightbox);
         arrayCardsLightbox.forEach((cardLightbox) => {
+          focusStyleLight(cardLightbox);
           focusStyle(cardLightbox.childNodes[1].childNodes[0].childNodes[0]);
           focusStyle(cardLightbox.childNodes[1].childNodes[1]);
         });

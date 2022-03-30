@@ -204,7 +204,7 @@ aside p {
   width: fit-content;
   text-align: center;
   color: #901c1c;
-  font-size: 1.5rem;
+  font-size: 1.9rem;
   padding: 25px;
 }
 .disabled {
@@ -214,7 +214,7 @@ aside p {
 .lightbox_card button {
   position: absolute;
   top: 2rem;
-  right: 5px;
+  right: 20px;
   z-index: 1000;
   cursor: pointer;
   border: none;
@@ -227,7 +227,7 @@ aside p {
 
 .lightbox_card figure {
   width: fit-content;
-  margin: 0 auto;
+  margin: 0 1%;
   background-color: white;
 }
 
@@ -358,8 +358,12 @@ aside p {
 
 .page-elements_focus:focus {
   border: none;
-  outline: 3px solid #db8876;
-  outline-offset: 3px;
+  outline: 2px solid #db8876;
+  outline-offset: 1px;
+}
+.page-elements_focus--simple:focus {
+  border: 1px dotted #db8876;
+  outline: none;
 }
 
 /* ------------------------------------------------------------------------ */
@@ -465,7 +469,7 @@ aside p {
     font-size: 0.6rem;
   }
   .lightbox_card {
-    width: 100%;
+    width: 98%;
   }
   .lightbox_card figure video::cue {
     font-size: 0.5rem;

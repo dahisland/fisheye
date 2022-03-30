@@ -34,6 +34,7 @@ function lightboxFactory(data) {
     figcaption.innerHTML = title;
 
     if (video !== undefined) {
+      const divContainVideo = document.createElement("div");
       const containerVideo = document.createElement("video");
       containerVideo.setAttribute("src", videoPhotographer);
       containerVideo.setAttribute("tabindex", "-1");
@@ -48,7 +49,8 @@ function lightboxFactory(data) {
       trackVideo.setAttribute("label", "English");
       trackVideo.setAttribute("default", "true");
       containerVideo.appendChild(trackVideo);
-      figure.appendChild(containerVideo);
+      divContainVideo.appendChild(containerVideo);
+      figure.appendChild(divContainVideo);
       figure.appendChild(figcaption);
     } else {
       const containerPicture = document.createElement("picture");

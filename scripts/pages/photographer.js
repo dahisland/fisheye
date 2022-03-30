@@ -146,7 +146,7 @@ function getPhotographer() {
       // ------------- FOCUS ACCESSIBILITY : TABINDEX FOR MAIN PAGE --------------- //
       // -------------------------------------------------------------------------- //
 
-      const logo = document.querySelector(".logo");
+      const logo = document.querySelector(".page-header > a");
       const mainTitle = document.querySelector("h1");
       const identityInfos = document.querySelector(".identity > div");
       const contactButton = document.querySelector(".contact_button");
@@ -187,6 +187,16 @@ function getPhotographer() {
         });
       }
 
+      async function removeTabindexImgGallery() {
+        photographMedias.forEach((photographMedia) => {
+          const imgGallery = document.getElementById(
+            "card" + photographMedia.id
+          );
+          imgGallery.childNodes[0].setAttribute("tabindex", "-1");
+          imgGallery.childNodes[0].classList.remove("page-elements_focus");
+        });
+      }
+
       // ----- Function attribute order for images gallery ----- //
       // ------------------------------------------------------- //
 
@@ -221,6 +231,8 @@ function getPhotographer() {
         // ----------- Create button close
         const lightboxModalButton = document.createElement("button");
         lightboxModalButton.setAttribute("aria-label", "close dialog");
+        lightboxModalButton.setAttribute("tabindex", "-1");
+        lightboxModalButton.classList.add("page-elements_focus");
         const lightboxButtonImg = document.createElement("img");
         lightboxButtonImg.setAttribute("src", "./assets/icons/close_brown.svg");
         lightboxButtonImg.setAttribute("alt", "Fermer la lightbox");
@@ -263,25 +275,63 @@ function getPhotographer() {
 
         // ------------- Active media lightbox events ------------ //
         // ------------------------------------------------------- //
+        let arrayFocusLightbox = [];
 
         // Function to add/remove class active
         function openLightboxActiveMedia(imgGallery, arrayCard) {
+          const pageHeader = document.querySelector(".page-header");
+          const main = document.querySelector("main");
+          const buttonCloseLightbox = document.querySelector(
+            ".lightbox_card > button"
+          );
+          let leftBtn = arrayCard.childNodes[0];
+          let rightBtn = arrayCard.childNodes[2];
+          let mediaLightbox =
+            arrayCard.childNodes[1].childNodes[0].childNodes[0];
+          let captionMedia = arrayCard.childNodes[1].childNodes[1];
+
+          pageHeader.setAttribute("aria-hidden", "true");
+          main.setAttribute("aria-hidden", "true");
           lightboxModal.style.display = "block";
           body.style.overflow = "hidden";
+          arrayTabindexPage.forEach((tabindexPage) => {
+            tabindexPage.setAttribute("tabindex", "-1");
+          });
+          removeTabindexImgGallery();
+          buttonCloseLightbox.setAttribute("tabindex", "6");
+          buttonCloseLightbox.classList.add("page-elements_focus");
           if (
             imgGallery.getAttribute("data-id") ==
             arrayCard.getAttribute("data-id")
           ) {
+            arrayFocusLightbox.push(arrayCard);
+            arrayFocusLightbox.push(mediaLightbox);
+            arrayFocusLightbox.push(captionMedia);
+            arrayFocusLightbox.push(leftBtn);
+            arrayFocusLightbox.push(rightBtn);
+
+            let x = 0;
+            while (x < arrayFocusLightbox.length) {
+              arrayFocusLightbox[x].setAttribute("tabindex", x + 1);
+              arrayFocusLightbox[x].classList.add("page-elements_focus");
+              x++;
+            }
+
             arrayCard.classList.add("lightbox_card--active");
+            arrayCard.focus();
           } else {
             arrayCard.classList.remove("lightbox_card--active");
+            arrayCard.setAttribute("tabindex", "-1");
+            mediaLightbox.setAttribute("tabindex", "-1");
+            captionMedia.setAttribute("tabindex", "-1");
+            leftBtn.setAttribute("tabindex", "-1");
+            rightBtn.setAttribute("tabindex", "-1");
           }
         }
 
         // Open active media card lightbox on event
         for (let i = 0; i < arrayCardsLightbox.length; i++) {
           let currentCardLightbox = arrayCardsLightbox[i];
-          let nextCardLightbox = arrayCardsLightbox[i + 1];
 
           const imagesGallery = document.querySelectorAll(".images-gallery");
           imagesGallery.forEach((imageGallery) => {
@@ -291,8 +341,6 @@ function getPhotographer() {
             imageGallery.addEventListener("keydown", (e) => {
               if (e.code === "Enter") {
                 openLightboxActiveMedia(imageGallery, currentCardLightbox);
-                currentCardLightbox.setAttribute("tabindex", "-1");
-                currentCardLightbox.focus();
               }
             });
           });
@@ -314,10 +362,45 @@ function getPhotographer() {
               arrayCardsLightbox[i]
             );
             let indexCurrentButton = arrayButtons.indexOf(arrayButtons[i]);
+
             if (indexCurrentCard === indexCurrentButton) {
               currentButton.addEventListener("click", () => {
                 currentCard.classList.remove("lightbox_card--active");
                 nextCard.classList.add("lightbox_card--active");
+              });
+              currentButton.addEventListener("keydown", (e) => {
+                if (e.code == "Enter" && nextCard !== undefined) {
+                  let mediaLightbox =
+                    nextCard.childNodes[1].childNodes[0].childNodes[0];
+                  let captionMedia = nextCard.childNodes[1].childNodes[1];
+                  let leftBtn = nextCard.childNodes[0];
+                  let rightBtn = nextCard.childNodes[2];
+
+                  currentCard.classList.remove("lightbox_card--active");
+                  nextCard.classList.add("lightbox_card--active");
+
+                  arrayFocusLightbox.forEach((focusLightbox) => {
+                    focusLightbox.setAttribute("tabindex", "-1");
+                    focusLightbox.classList.remove("page-elements_focus");
+                  });
+
+                  arrayFocusLightbox.length = 0;
+                  arrayFocusLightbox.push(nextCard);
+                  arrayFocusLightbox.push(mediaLightbox);
+                  arrayFocusLightbox.push(captionMedia);
+                  arrayFocusLightbox.push(leftBtn);
+                  arrayFocusLightbox.push(rightBtn);
+
+                  let x = 0;
+                  while (x < arrayFocusLightbox.length) {
+                    arrayFocusLightbox[x].setAttribute("tabindex", x + 1);
+                    arrayFocusLightbox[x].classList.add("page-elements_focus");
+                    x++;
+                  }
+                  nextCard.focus();
+                } else if (e.code == "Enter" && nextCard === undefined) {
+                  e.preventDefault();
+                }
               });
             }
             if (indexCurrentCard === indexDisabled) {
@@ -335,8 +418,17 @@ function getPhotographer() {
 
         async function closeLightbox() {
           lightboxModalButton.addEventListener("click", () => {
+            const pageHeader = document.querySelector(".page-header");
+            const main = document.querySelector("main");
+            const imgGallery = document.querySelectorAll(".images-gallery");
+            getTabindexPage();
+            addTabindexImgGallery();
+            imgGallery[0].focus();
+            pageHeader.setAttribute("aria-hidden", "false");
+            main.setAttribute("aria-hidden", "false");
             lightboxModal.style.display = "none";
             body.style.overflow = "auto";
+            arrayFocusLightbox.length = 0;
           });
         }
         closeLightbox();

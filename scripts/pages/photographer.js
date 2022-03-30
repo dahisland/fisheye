@@ -214,6 +214,7 @@ function getPhotographer() {
           );
           const captionImage = imgGallery.childNodes[1].childNodes[0];
           const likeImage = imgGallery.childNodes[1].childNodes[1];
+
           imgGallery.childNodes[0].setAttribute(
             "tabindex",
             photographMedias.indexOf(photographMedia) + 9
@@ -237,7 +238,12 @@ function getPhotographer() {
           const imgGallery = document.getElementById(
             "card" + photographMedia.id
           );
+          const captionImage = imgGallery.childNodes[1].childNodes[0];
+          const likeImage = imgGallery.childNodes[1].childNodes[1];
+
           imgGallery.childNodes[0].setAttribute("tabindex", "-1");
+          captionImage.setAttribute("tabindex", "-1");
+          likeImage.setAttribute("tabindex", "-1");
         });
       }
       // ------------------- Call functions for tabindex ------------------- //

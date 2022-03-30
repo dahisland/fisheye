@@ -149,6 +149,7 @@ contactForm.addEventListener("submit", (e) => {
     console.log("Nom : " + inputLastname.value);
     console.log("Email : " + inputEmail.value);
     console.log("Message : " + textarea.value);
+    closeContactModal.focus();
     return true;
   }
 });

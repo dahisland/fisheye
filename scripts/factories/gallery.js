@@ -23,7 +23,8 @@ function galleryFactory(data) {
     titlePhoto.classList.add("title-photo");
     titlePhoto.textContent = title;
     // Container for likes
-    const likePhoto = document.createElement("p");
+    const likePhoto = document.createElement("a");
+    likePhoto.setAttribute("href", "#");
     likePhoto.setAttribute("id", "likes" + id);
     likePhoto.setAttribute("aria-label", "likes");
     likePhoto.innerHTML =

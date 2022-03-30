@@ -120,7 +120,8 @@ function getPhotographer() {
           const containerLike = document.getElementById(
             "likes" + photographMedia.id
           );
-          containerLike.addEventListener("click", () => {
+          containerLike.addEventListener("click", (e) => {
+            e.preventDefault();
             let likesMedia = photographMedia.likes;
             const mediaObj = JSON.stringify(likesMedia);
             const mediaObjParsed = JSON.parse(mediaObj, (value) => {
@@ -211,7 +212,17 @@ function getPhotographer() {
           const imgGallery = document.getElementById(
             "card" + photographMedia.id
           );
+          const captionImage = imgGallery.childNodes[1].childNodes[0];
+          const likeImage = imgGallery.childNodes[1].childNodes[1];
           imgGallery.childNodes[0].setAttribute(
+            "tabindex",
+            photographMedias.indexOf(photographMedia) + 9
+          );
+          captionImage.setAttribute(
+            "tabindex",
+            photographMedias.indexOf(photographMedia) + 9
+          );
+          likeImage.setAttribute(
             "tabindex",
             photographMedias.indexOf(photographMedia) + 9
           );
@@ -349,6 +360,18 @@ function getPhotographer() {
           ".gallery-cards > figure > img"
         );
         imgsGallery.forEach((imgGallery) => {
+          focusStyle(imgGallery);
+        });
+        const captionsGallery = document.querySelectorAll(
+          ".gallery-cards > figure > figcaption > p"
+        );
+        captionsGallery.forEach((imgGallery) => {
+          focusStyle(imgGallery);
+        });
+        const likesGallery = document.querySelectorAll(
+          ".gallery-cards > figure > figcaption > a"
+        );
+        likesGallery.forEach((imgGallery) => {
           focusStyle(imgGallery);
         });
         rightButtons.forEach((rightButton) => {
@@ -517,10 +540,9 @@ function getPhotographer() {
           lightboxModalButton.addEventListener("click", () => {
             const pageHeader = document.querySelector(".page-header");
             const main = document.querySelector("main");
-            const imgGallery = document.querySelectorAll(".images-gallery");
             getTabindexPage();
             addTabindexImgGallery();
-            imgGallery[0].focus();
+            select.focus();
             pageHeader.setAttribute("aria-hidden", "false");
             pageHeader.style.display = "flex";
             main.setAttribute("aria-hidden", "false");

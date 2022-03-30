@@ -22,6 +22,33 @@ function getPhotographers() {
           const userCardDOM = photographerModel.getUserCardDOM();
           photographersSection.appendChild(userCardDOM);
         });
+
+        // ----------------------------------------------------------------------- //
+        // --------------------------- STYLE ON FOCUS ---------------------------- //
+        // ----------------------------------------------------------------------- //
+
+        const logo = document.querySelector("header > a");
+        const mainTitle = document.querySelector("h1");
+        const linksPhotographer = document.querySelectorAll(".a_photographer");
+        const infosPhotographer = document.querySelectorAll("article > div");
+
+        function styleFocus(elementFocused) {
+          elementFocused.addEventListener("focus", () => {
+            elementFocused.classList.add("page-elements_focus");
+          });
+          elementFocused.addEventListener("focusout", () => {
+            elementFocused.classList.remove("page-elements_focus");
+          });
+        }
+
+        styleFocus(logo);
+        styleFocus(mainTitle);
+        linksPhotographer.forEach((linkPhotographer) => {
+          styleFocus(linkPhotographer);
+        });
+        infosPhotographer.forEach((infoPhotographer) => {
+          styleFocus(infoPhotographer);
+        });
       });
     })
 

@@ -42,6 +42,7 @@ function getPhotographer() {
           if (idProfile == idUrlParam) {
             const main = document.querySelector("main");
             const aside = document.createElement("aside");
+            aside.setAttribute("aria-label", "popularity and rate");
             const pricePhotographer = document.createElement("p");
             pricePhotographer.classList.add("price-photographer");
             pricePhotographer.innerHTML = photographer.price + "€/jour";
@@ -244,6 +245,14 @@ function getPhotographer() {
         });
         removeTabindexImgGallery();
       });
+      contactButton.addEventListener("keydown", (e) => {
+        if (e.code == "Enter") {
+          arrayTabindexPage.forEach((tabindexPage) => {
+            tabindexPage.setAttribute("tabindex", "-1");
+          });
+          removeTabindexImgGallery();
+        }
+      });
       closeContactModal.addEventListener("click", () => {
         getTabindexPage();
         addTabindexImgGallery();
@@ -376,6 +385,7 @@ function getPhotographer() {
           // Accessibility modifications
           pageHeader.setAttribute("aria-hidden", "true");
           main.setAttribute("aria-hidden", "true");
+          pageHeader.style.display = "none";
           arrayTabindexPage.forEach((tabindexPage) => {
             tabindexPage.setAttribute("tabindex", "-1");
           });
@@ -403,11 +413,14 @@ function getPhotographer() {
             }
             // Add class active (change z-index)
             arrayCard.classList.add("lightbox_card--active");
+            arrayCard.setAttribute("aria-hidden", "false");
+            arrayCard.setAttribute("aria-label", "closeup view");
             // Place focus on card active
             arrayCard.focus();
           } else {
             // Remove class active for cards non actives
             arrayCard.classList.remove("lightbox_card--active");
+            arrayCard.setAttribute("aria-hidden", "true");
             // Change tabindex for elements in cards non active
             arrayCard.setAttribute("tabindex", "-1");
             mediaLightbox.setAttribute("tabindex", "-1");
@@ -509,6 +522,7 @@ function getPhotographer() {
             addTabindexImgGallery();
             imgGallery[0].focus();
             pageHeader.setAttribute("aria-hidden", "false");
+            pageHeader.style.display = "flex";
             main.setAttribute("aria-hidden", "false");
             lightboxModal.style.display = "none";
             body.style.overflow = "auto";

@@ -20,6 +20,8 @@ function cardsFactory(data) {
     h2.textContent = name;
     // Container for text photographer
     const div = document.createElement("div");
+    div.setAttribute("tabindex", "0");
+    div.setAttribute("aria-label", "Informations photographer");
     // Localisation photographer
     const pLocalisation = document.createElement("p");
     pLocalisation.classList.add("p_localisation");

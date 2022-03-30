@@ -388,18 +388,6 @@ aside p {
   outline-offset: 5px;
 }
 
-/* FOCUS  */
-
-.page-elements_focus:focus {
-  border: none;
-  outline: 2px solid #db8876;
-  outline-offset: 1px;
-}
-.page-elements_focus--simple:focus {
-  border: 1px dotted #db8876;
-  outline: none;
-}
-
 /* ------------------------------------------------------------------------ */
 /* ---------------------------- MEDIAS QUERIES ---------------------------- */
 /* ------------------------------------------------------------------------ */

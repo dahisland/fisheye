@@ -12,6 +12,8 @@ const inputEmail = document.querySelector("#email");
 const textarea = document.querySelector("#message");
 const inputs = document.querySelectorAll(".form-input");
 const body = document.querySelector("body");
+const pageHeader = document.querySelector(".page-header");
+const main = document.querySelector("main");
 
 // Regex
 const regexText =
@@ -69,11 +71,17 @@ function displayModal() {
   });
   textarea.style.outline = "none";
   modalContent.focus();
+  pageHeader.setAttribute("aria-hidden", "true");
+  main.setAttribute("aria-hidden", "true");
+  pageHeader.style.display = "none";
 }
 function closeModal() {
   contactButton.focus();
   modal.style.display = "none";
   body.style.overflow = "auto";
+  pageHeader.setAttribute("aria-hidden", "false");
+  main.setAttribute("aria-hidden", "false");
+  pageHeader.style.display = "flex";
 }
 
 closeContactModal.addEventListener("keydown", (e) => {

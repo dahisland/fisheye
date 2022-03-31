@@ -86,6 +86,9 @@ function closeModal() {
 
 closeContactModal.addEventListener("keydown", (e) => {
   e.preventDefault();
+  if (e.code == "Tab") {
+    modalContent.focus();
+  }
   if (e.code == "Enter") {
     closeModal();
   }

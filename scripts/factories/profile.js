@@ -11,7 +11,7 @@ function profileFactory(data) {
     identityPhotographer.classList.add("identity");
     // Name photographer
     const namePhotographer = document.createElement("h1");
-    namePhotographer.setAttribute("aria-label", "Photographer name");
+    namePhotographer.setAttribute("aria-label", name);
     namePhotographer.textContent = name;
     // Localisation photographer
     const identityInfo = document.createElement("div");

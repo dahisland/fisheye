@@ -1,13 +1,21 @@
-function galleryFactory(data) {
-  const { photographerId, image, title, likes, id } = data;
+//********************************************************************************** //
+// ------------------------ GALLERY FACTORY (for page index) ----------------------- //
+//********************************************************************************** //
 
+function galleryFactory(data) {
+  // ------------------------------------------------ Variables //
+  // ------------------------------------------------ ********* //
+
+  const { photographerId, image, title, likes, id } = data; // Destructuring
   const mediaPhoto = `./assets/medias/${photographerId}/${image}`;
 
   function getGalleryCardDOM() {
+    // ---------------------------------------- Create elements //
+    // ---------------------------------------------- ********* //
+
     // Card photo container
     const figure = document.createElement("figure");
     figure.setAttribute("id", "card" + id);
-
     // Photo
     const photo = document.createElement("img");
     photo.setAttribute("src", mediaPhoto);
@@ -16,7 +24,7 @@ function galleryFactory(data) {
     photo.setAttribute("aria-label", title + ", closeup view");
     photo.setAttribute("data-id", id);
     photo.classList.add("images-gallery");
-    // figaption
+    // Figaption
     const figcaption = document.createElement("figcaption");
     // Container for media title
     const titlePhoto = document.createElement("p");
@@ -31,7 +39,10 @@ function galleryFactory(data) {
       '<span class="text-likes">' +
       likes +
       ' </span><span class="fas fa-heart"></span>';
-    // appendChild
+
+    // ------------------------------------------- Append child //
+    // ---------------------------------------------- ********* //
+
     figure.appendChild(photo);
     figure.appendChild(figcaption);
     figcaption.appendChild(titlePhoto);
@@ -40,7 +51,6 @@ function galleryFactory(data) {
     return figure;
   }
   return { getGalleryCardDOM };
-  // return { title, image, likes, id, getGalleryCardDOM };
 }
 
 export { galleryFactory };

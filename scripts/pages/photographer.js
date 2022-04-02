@@ -1,29 +1,41 @@
 import * as profile from "../factories/profile.js";
+import * as asideLikes from "../factories/aside.js";
 import * as gallery from "../factories/gallery.js";
 import * as lightbox from "../factories/lightbox.js";
 
+// Variables for URL
 const urlParam = new URL(window.location.href);
 const idUrlParam = urlParam.searchParams.get("id");
+
 function getPhotographer() {
-  // ----------------------------------------------------------------------------- //
-  // ----------------------------------- FETCH ----------------------------------- //
-  // ----------------------------------------------------------------------------- //
+  // ****************************************************************************** //
+  // ----------------------------------- FETCH ------------------------------------ //
+  //******************************************************************************* //
 
   fetch("data/photographers.json")
     .then((response) => response.json())
     .then((json) => {
+      // ------------------------------------------------ Variables //
+      // ------------------------------------------------ ********* //
+      const main = document.querySelector("main");
+      // Variables for JSON datas
       const photographers = json.photographers;
       let medias = json.medias.sort((a, b) => a.likes - b.likes);
+      // Variables for sorting <select>
+      const sortingSelect = document.querySelector("#sorting-label");
+      const optionPopularite = document.querySelector("#option-popularite");
+      const optionDate = document.querySelector("#option-date");
+      const optionTitle = document.querySelector("#option-title");
+      // Variable for container gallery
       const galleryContainer = document.querySelector(".gallery-cards");
 
-      // -------------------------------------------------------------------------- //
+      // ************************************************************************** //
       // --------------------- DISPLAY PHOTOGRAPHER PROFILE ----------------------- //
-      // -------------------------------------------------------------------------- //
+      // ************************************************************************** //
 
       async function photographerProfile() {
         photographers.forEach((photographer) => {
-          const idProfile = photographer.id;
-          if (idProfile == idUrlParam) {
+          if (photographer.id == idUrlParam) {
             const photographerModel = profile.profileFactory(photographer);
             photographerModel.getUserProfileDOM();
             formContactTitle(photographer);
@@ -32,64 +44,49 @@ function getPhotographer() {
       }
       photographerProfile();
 
-      // -------------------------------------------------------------------------- //
+      // ************************************************************************** //
       // ----------- DISPLAY PHOTOGRAPHER ASIDE (TOTAL LIKES & PRICE) ------------- //
-      // -------------------------------------------------------------------------- //
+      // ************************************************************************** //
 
       async function photographerAside() {
         photographers.forEach((photographer) => {
-          const idProfile = photographer.id;
-          if (idProfile == idUrlParam) {
-            const main = document.querySelector("main");
-            const aside = document.createElement("aside");
-            aside.setAttribute("aria-label", "popularity and rate");
-            const pricePhotographer = document.createElement("p");
-            pricePhotographer.classList.add("price-photographer");
-            pricePhotographer.innerHTML = photographer.price + "€/jour";
-            const totalLikesPhotographer = document.createElement("p");
-            totalLikesPhotographer.classList.add("total-likes-photographer");
-
-            main.appendChild(aside);
-            aside.appendChild(totalLikesPhotographer);
-            aside.appendChild(pricePhotographer);
+          if (photographer.id == idUrlParam) {
+            const asideModel = asideLikes.asideFactory(photographer);
+            const cardAside = asideModel.getAsideDOM();
+            main.appendChild(cardAside);
           }
         });
       }
       photographerAside();
 
-      // -------------------------------------------------------------------------- //
-      // ----------------- DISPLAY SECTION PHOTOGRAPHER GALLERY ------------------- //
-      // -------------------------------------------------------------------------- //
+      // ************************************************************************** //
+      // ------------------------------- VARIABLES -------------------------------- //
+      // ************************************************************************** //
 
-      const totalLikesContainer = document.querySelector(
-        ".total-likes-photographer"
-      );
-      // Variables for sorting <select>
-      const sortingSelect = document.querySelector("#sorting-label");
-      const optionPopularite = document.querySelector("#option-popularite");
-      const optionDate = document.querySelector("#option-date");
-      const optionTitle = document.querySelector("#option-title");
-      // Array with photograph medias
+      // Array containing only photograph medias
       let photographMedias = [];
-
-      // -- Function to create array with photographer medias -- //
-      // ------------------------------------------------------- //
-
-      // Sorting by default (popularity is selected by default)
       photographMedias = photographMedias.sort((a, b) => a.likes - b.likes);
+      // Variable <p> containing total likes photographer
+      const totalLikesContainer = document.querySelector(".total-likes");
+
+      // ************************************************************************** //
+      // ----------------- DISPLAY SECTION PHOTOGRAPHER GALLERY ------------------- //
+      // ************************************************************************** //
+
+      // ------------------ Generate array with photographer medias //
+      // ------------------------------------------------ ********* //
 
       async function getArrayPhotographerGallery() {
         medias.forEach((media) => {
-          const idPhotoMedias = media.photographerId;
-          if (idUrlParam == idPhotoMedias) {
+          if (idUrlParam == media.photographerId) {
             photographMedias.push(media);
           }
         });
       }
       getArrayPhotographerGallery();
 
-      // ----------- Function to get images gallery ------------ //
-      // ------------------------------------------------------- //
+      // --------------------------- Function to get images gallery //
+      // ------------------------------------------------ ********* //
 
       async function getImagesGallery() {
         photographMedias.forEach((photographMedia) => {
@@ -99,8 +96,8 @@ function getPhotographer() {
         });
       }
 
-      // ---------- Function to calculate total likes ---------- //
-      // ------------------------------------------------------- //
+      // ------------------------ Function to calculate total likes //
+      // ------------------------------------------------ ********* //
 
       async function getTotalLikes() {
         let sumLikes = 0;
@@ -111,8 +108,8 @@ function getPhotographer() {
           sumLikes + ' <span class="fas fa-heart"></span>';
       }
 
-      // ---------- Function for incrementation likes ---------- //
-      // ------------------------------------------------------- //
+      // ------------------------ Function for incrementation likes //
+      // ------------------------------------------------ ********* //
 
       async function incrementLikes() {
         photographMedias.forEach((photographMedia) => {
@@ -123,31 +120,26 @@ function getPhotographer() {
           containerLike.addEventListener("click", (e) => {
             e.preventDefault();
             let likesMedia = photographMedia.likes;
-            const mediaObj = JSON.stringify(likesMedia);
-            const mediaObjParsed = JSON.parse(mediaObj, (value) => {
-              if (statutLike == false) {
-                value = likesMedia + 1;
-                containerLike.firstChild.classList.add("number-likes");
-                statutLike = true;
-              } else {
-                value = likesMedia - 1;
-                containerLike.firstChild.classList.remove("number-likes");
-                statutLike = false;
-              }
-              return value;
-            });
-            photographMedia.likes = mediaObjParsed;
-            containerLike.firstChild.innerHTML = mediaObjParsed + " ";
-            // Recalculate total likes with new value for medias liked
+
+            if (statutLike == false) {
+              photographMedia.likes = likesMedia + 1;
+              containerLike.firstChild.classList.add("number-likes");
+              statutLike = true;
+              containerLike.firstChild.innerHTML = photographMedia.likes + " ";
+            } else {
+              photographMedia.likes = likesMedia - 1;
+              containerLike.firstChild.classList.remove("number-likes");
+              statutLike = false;
+              containerLike.firstChild.innerHTML = photographMedia.likes + " ";
+            }
             getTotalLikes();
           });
         });
       }
 
-      // ----- Function attribute order for images gallery ----- //
-      // ------------------------------------------------------- //
+      // ---------- Function add attribute order for images gallery //
+      // ------------------------------------------------ ********* //
 
-      // Add/change CSS attribute "order" for each <figure> image gallery
       async function addCssOrder() {
         photographMedias.forEach((photographMedia) => {
           const card = document.getElementById("card" + photographMedia.id);
@@ -155,31 +147,54 @@ function getPhotographer() {
         });
       }
 
-      // ----------------- Get section gallery ----------------- //
-      // ------------------------------------------------------- //
+      // --------------------------------- Generate section gallery //
+      // ------------------------------------------------ ********* //
 
       getImagesGallery();
       addCssOrder();
       incrementLikes();
       getTotalLikes();
 
-      // -------------------------------------------------------------------------- //
-      // ------------- FOCUS ACCESSIBILITY : TABINDEX FOR MAIN PAGE --------------- //
-      // -------------------------------------------------------------------------- //
+      // ************************************************************************** //
+      // ------------------------------- VARIABLES -------------------------------- //
+      // ************************************************************************** //
 
+      // Variable HEADER page
+      const pageHeader = document.querySelector(".page-header");
       const logo = document.querySelector(".page-header > a");
+      // Variables profile section
       const mainTitle = document.querySelector("h1");
       const identityInfos = document.querySelector(".identity > div");
-      const contactButton = document.querySelector(".contact_button");
       const photoProfile = document.querySelector(".photograph-header > img");
+      // Variables for contact form
+      const contactButton = document.querySelector(".contact_button");
+      const closeContactModal = document.querySelector(".modal > header > img");
+      // Variable for aside container
       const aside = document.querySelector("aside");
+      // Variables for sorting filter
       const sortingLabel = document.querySelector(".gallery-sorting > label");
       const select = document.querySelector("#sorting-label");
-
-      // - Array for elements focused in page photographer (except gallery) - //
-      // -------------------------------------------------------------------- //
-
+      // Variables for elements gallery
+      const imagesGallery = document.querySelectorAll(".images-gallery");
+      const captionsGallery = document.querySelectorAll(
+        ".gallery-cards > figure > figcaption > p"
+      );
+      const likesGallery = document.querySelectorAll(
+        ".gallery-cards > figure > figcaption > a"
+      );
+      // Variables for lightbox modale
+      const lightboxModal = document.querySelector(".lightbox_modal");
+      const lightboxCard = document.querySelector(".lightbox_card");
+      // Array containing elements focused (except modales)
       let arrayTabindexPage = [];
+
+      // ************************************************************************** //
+      // ------------- FOCUS ACCESSIBILITY : TABINDEX FOR MAIN PAGE --------------- //
+      // ************************************************************************** //
+
+      // Generate array for elements focused section profile + sort //
+      // ------------------------------------------------ ********* //
+
       function construcArrayTabindex() {
         arrayTabindexPage.push(logo);
         arrayTabindexPage.push(mainTitle);
@@ -190,11 +205,10 @@ function getPhotographer() {
         arrayTabindexPage.push(sortingLabel);
         arrayTabindexPage.push(select);
       }
-
       construcArrayTabindex();
 
-      // ----- Tabindex for elements page photographer (except gallery) ----- //
-      // -------------------------------------------------------------------- //
+      // ----- Function for tabindex focused section profile + sort //
+      // ------------------------------------------------ ********* //
 
       async function getTabindexPage() {
         let n = 0;
@@ -204,34 +218,44 @@ function getPhotographer() {
         }
       }
 
-      // ------------------ Tabindex for elements gallery ------------------ //
-      // ------------------------------------------------------------------- //
+      // ------------ Function for tabindex focused section gallery //
+      // ------------------------------------------------ ********* //
 
       async function addTabindexImgGallery() {
         photographMedias.forEach((photographMedia) => {
-          const imgGallery = document.getElementById(
+          const imgIDGallery = document.getElementById(
             "card" + photographMedia.id
           );
-          const captionImage = imgGallery.childNodes[1].childNodes[0];
-          const likeImage = imgGallery.childNodes[1].childNodes[1];
-
-          imgGallery.childNodes[0].setAttribute(
+          const captionImage = imgIDGallery.childNodes[1].childNodes[0];
+          const likeImage = imgIDGallery.childNodes[1].childNodes[1];
+          // Tabindex for image gallery
+          imgIDGallery.childNodes[0].setAttribute(
             "tabindex",
             photographMedias.indexOf(photographMedia) + 9
           );
+          // Tabindex for caption image
           captionImage.setAttribute(
             "tabindex",
             photographMedias.indexOf(photographMedia) + 9
           );
+          // Tabindex for likes image
           likeImage.setAttribute(
             "tabindex",
             photographMedias.indexOf(photographMedia) + 9
           );
         });
       }
+      // Function for reset tabindex focused section profile + sort //
+      // ------------------------------------------------ ********* //
 
-      // --------------- Reset tabindex for elements gallery --------------- //
-      // ------------------------------------------------------------------- //
+      async function removeTabindexPage(arrElements) {
+        arrElements.forEach((element) => {
+          element.setAttribute("tabindex", "-1");
+        });
+      }
+
+      // ------ Function for reset tabindex focused section gallery //
+      // ------------------------------------------------ ********* //
 
       async function removeTabindexImgGallery() {
         photographMedias.forEach((photographMedia) => {
@@ -246,27 +270,22 @@ function getPhotographer() {
           likeImage.setAttribute("tabindex", "-1");
         });
       }
-      // ------------------- Call functions for tabindex ------------------- //
-      // ------------------------------------------------------------------- //
+      // --------- Generate tabindex for elements profile & gallery //
+      // ------------------------------------------------ ********* //
 
       getTabindexPage();
       addTabindexImgGallery();
 
-      // ----------- Events tabindex for open/close Contact modal ---------- //
-      // ------------------------------------------------------------------- //
+      // - Contact form events with tabindex (on open/close modale) //
+      // ------------------------------------------------ ********* //
 
-      const closeContactModal = document.querySelector(".modal > header > img");
       contactButton.addEventListener("click", () => {
-        arrayTabindexPage.forEach((tabindexPage) => {
-          tabindexPage.setAttribute("tabindex", "-1");
-        });
+        removeTabindexPage(arrayTabindexPage);
         removeTabindexImgGallery();
       });
       contactButton.addEventListener("keydown", (e) => {
         if (e.code == "Enter") {
-          arrayTabindexPage.forEach((tabindexPage) => {
-            tabindexPage.setAttribute("tabindex", "-1");
-          });
+          removeTabindexPage(arrayTabindexPage);
           removeTabindexImgGallery();
         }
       });
@@ -282,18 +301,40 @@ function getPhotographer() {
         }
       });
 
-      // -------------------------------------------------------------------------- //
+      // ------------ Generate style css focus for elements focused //
+      // ------------------------------------------------ ********* //
+
+      function focusStyle(elementFocused, classFocus) {
+        elementFocused.addEventListener("focus", () => {
+          elementFocused.classList.add(classFocus);
+        });
+        elementFocused.addEventListener("focusout", () => {
+          elementFocused.classList.remove(classFocus);
+        });
+      }
+
+      arrayTabindexPage.forEach((tabindexPage) => {
+        focusStyle(tabindexPage, "page-elements_focus");
+      });
+      imagesGallery.forEach((imgGallery) => {
+        focusStyle(imgGallery, "page-elements_focus");
+      });
+      captionsGallery.forEach((captionGallery) => {
+        focusStyle(captionGallery, "page-elements_focus");
+      });
+      likesGallery.forEach((likeGallery) => {
+        focusStyle(likeGallery, "page-elements_focus");
+      });
+
+      // ************************************************************************** //
       // --------------------------- DISPLAY LIGHTBOX ----------------------------- //
-      // -------------------------------------------------------------------------- //
+      // ************************************************************************** //
 
-      const lightboxModal = document.querySelector(".lightbox_modal");
-      const lightboxCard = document.querySelector(".lightbox_card");
+      async function generateLightbox() {
+        // ------------------------------------ Generate medias cards //
+        // ------------------------------------------------ ********* //
 
-      async function getLightbox() {
-        // ----------------- Generate medias cards --------------- //
-        // ------------------------------------------------------- //
-
-        // ----------- Create button close
+        // Create Button close modale lightbox
         const lightboxModalButton = document.createElement("button");
         lightboxModalButton.setAttribute("aria-label", "close dialog");
         lightboxModalButton.setAttribute("tabindex", "-1");
@@ -303,182 +344,142 @@ function getPhotographer() {
         lightboxButtonImg.setAttribute("fill", "red");
         lightboxModalButton.appendChild(lightboxButtonImg);
         lightboxCard.appendChild(lightboxModalButton);
-        const buttonCloseLightbox = document.querySelector(
-          ".lightbox_card > button"
-        );
 
-        // ----------- Get medias cards
+        // Get medias cards (medias + captions & previous/next nav buttons)
         photographMedias.forEach((photographMedia) => {
           const lightboxModele = lightbox.lightboxFactory(photographMedia);
           const lightboxCardsDOM = lightboxModele.getLightboxCardDOM();
           lightboxCard.appendChild(lightboxCardsDOM);
         });
 
-        // ----------------------- Variables --------------------- //
-        // ------------------------------------------------------- //
+        // -------------------------------- Variables lightbox modale //
+        // ------------------------------------------------ ********* //
 
+        // Variable for containers media card
         const imagesLightbox = document.querySelectorAll(
           ".lightbox_card--absolute"
         );
+        // Variables for previous/next nav buttons
         const rightButtons = document.querySelectorAll(".right-button");
         const leftButtons = document.querySelectorAll(".left-button");
+        // Variable for close button lightbox modale
+        const buttonCloseLightbox = document.querySelector(
+          ".lightbox_card > button"
+        );
 
-        // ----------- Generate arrays with nodeslists
-        // Array medias cards
+        // Array with all medias cards
         let arrayCardsLightbox = [];
         imagesLightbox.forEach((imageLightbox) => {
           arrayCardsLightbox.push(imageLightbox);
         });
-        // Array right buttons
+        // Array with all right buttons
         let arrayRightButtons = [];
         rightButtons.forEach((rightButton) => {
           arrayRightButtons.push(rightButton);
         });
-        // Array left buttons
+        // Array with all left buttons
         let arrayLeftButtons = [];
         leftButtons.forEach((leftButton) => {
           arrayLeftButtons.push(leftButton);
         });
+        // Array with all elements focused in the active card
+        let arrayActiveFocusLightbox = [];
 
-        // ----------- Generate style css focus for elements on focus and focusout
-        function focusStyle(elementFocused) {
-          elementFocused.addEventListener("focus", () => {
-            elementFocused.classList.add("page-elements_focus");
-          });
-          elementFocused.addEventListener("focusout", () => {
-            elementFocused.classList.remove("page-elements_focus");
-          });
+        // Function to construct array containing elements lightbox focused
+        function getArrayActiveLightbox(array) {
+          let leftBtn = array.childNodes[0];
+          let rightBtn = array.childNodes[2];
+          let mediaCardLightbox =
+            array.childNodes[1].childNodes[0].childNodes[0];
+          let captionMedia = array.childNodes[1].childNodes[1];
+
+          arrayActiveFocusLightbox.push(array);
+          arrayActiveFocusLightbox.push(mediaCardLightbox);
+          arrayActiveFocusLightbox.push(captionMedia);
+          arrayActiveFocusLightbox.push(leftBtn);
+          arrayActiveFocusLightbox.push(rightBtn);
         }
 
-        function focusStyleLight(elementFocused) {
-          elementFocused.addEventListener("focus", () => {
-            elementFocused.classList.add("page-elements_focus--simple");
-          });
-          elementFocused.addEventListener("focusout", () => {
-            elementFocused.classList.remove("page-elements_focus--simple");
-          });
-        }
+        // -------------------- Add style focus for lightbox elements //
+        // ------------------------------------------------ ********* //
 
-        arrayTabindexPage.forEach((tabindexPage) => {
-          focusStyle(tabindexPage);
-        });
-        const imgsGallery = document.querySelectorAll(
-          ".gallery-cards > figure > img"
-        );
-        imgsGallery.forEach((imgGallery) => {
-          focusStyle(imgGallery);
-        });
-        const captionsGallery = document.querySelectorAll(
-          ".gallery-cards > figure > figcaption > p"
-        );
-        captionsGallery.forEach((imgGallery) => {
-          focusStyle(imgGallery);
-        });
-        const likesGallery = document.querySelectorAll(
-          ".gallery-cards > figure > figcaption > a"
-        );
-        likesGallery.forEach((imgGallery) => {
-          focusStyle(imgGallery);
-        });
         rightButtons.forEach((rightButton) => {
-          focusStyle(rightButton);
+          focusStyle(rightButton, "page-elements_focus");
         });
         leftButtons.forEach((leftButton) => {
-          focusStyle(leftButton);
+          focusStyle(leftButton, "page-elements_focus");
         });
-        focusStyle(buttonCloseLightbox);
+        focusStyle(buttonCloseLightbox, "page-elements_focus");
         arrayCardsLightbox.forEach((cardLightbox) => {
-          focusStyleLight(cardLightbox);
-          focusStyle(cardLightbox.childNodes[1].childNodes[0].childNodes[0]);
-          focusStyle(cardLightbox.childNodes[1].childNodes[1]);
+          focusStyle(cardLightbox, "page-elements_focus--light");
+          focusStyle(
+            cardLightbox.childNodes[1].childNodes[0].childNodes[0],
+            "page-elements_focus"
+          );
+          focusStyle(
+            cardLightbox.childNodes[1].childNodes[1],
+            "page-elements_focus"
+          );
         });
 
-        // ------------- Active media lightbox events ------------ //
-        // ------------------------------------------------------- //
-        let arrayFocusLightbox = [];
+        // ---------- Function for accessibility active card lightbox //
+        // ------------------------------------------------ ********* //
 
-        // Function called for events opening lightbox
-        function openLightboxActiveMedia(imgGallery, arrayCard) {
-          const pageHeader = document.querySelector(".page-header");
-          const main = document.querySelector("main");
-          let leftBtn = arrayCard.childNodes[0];
-          let rightBtn = arrayCard.childNodes[2];
-          let mediaLightbox =
-            arrayCard.childNodes[1].childNodes[0].childNodes[0];
-          let captionMedia = arrayCard.childNodes[1].childNodes[1];
-
-          // Display modale lightbox
-          lightboxModal.style.display = "block";
-          body.style.overflow = "hidden";
-
-          // Accessibility modifications
+        function addTabindexLightbox(imgGallery, arrayElements) {
+          // Tabindex -1 for main sections and header page
+          removeTabindexPage(arrayTabindexPage);
+          removeTabindexImgGallery();
+          // Hide arias for header and main elements
           pageHeader.setAttribute("aria-hidden", "true");
           main.setAttribute("aria-hidden", "true");
-          pageHeader.style.display = "none";
-          arrayTabindexPage.forEach((tabindexPage) => {
-            tabindexPage.setAttribute("tabindex", "-1");
-          });
-          // Change tabindex for images gallery
-          removeTabindexImgGallery();
           // Add tabindex for button close modale lightbox
           buttonCloseLightbox.setAttribute("tabindex", "6");
 
+          // Add tabindex for elements in active card lightbox focused
           if (
             imgGallery.getAttribute("data-id") ==
-            arrayCard.getAttribute("data-id")
+            arrayElements.getAttribute("data-id")
           ) {
             // Construct array containing elements lightbox focused
-            arrayFocusLightbox.push(arrayCard);
-            arrayFocusLightbox.push(mediaLightbox);
-            arrayFocusLightbox.push(captionMedia);
-            arrayFocusLightbox.push(leftBtn);
-            arrayFocusLightbox.push(rightBtn);
-
-            // Add tabindex for elements focused in lightbox
+            getArrayActiveLightbox(arrayElements);
+            // Add tabindex for elements focused in active card lightbox
             let x = 0;
-            while (x < arrayFocusLightbox.length) {
-              arrayFocusLightbox[x].setAttribute("tabindex", x + 1);
+            while (x < arrayActiveFocusLightbox.length) {
+              arrayActiveFocusLightbox[x].setAttribute("tabindex", x + 1);
               x++;
             }
-            // Add class active (change z-index)
-            arrayCard.classList.add("lightbox_card--active");
-            arrayCard.setAttribute("aria-hidden", "false");
-            arrayCard.setAttribute("aria-label", "closeup view");
+            // Add class active for active lightbox card
+            arrayElements.classList.add("lightbox_card--active");
+            // Add ARIA's
+            arrayElements.setAttribute("aria-hidden", "false");
+            arrayElements.setAttribute("aria-label", "closeup view");
             // Place focus on card active
-            arrayCard.focus();
-          } else {
+            arrayElements.focus();
+          }
+          // For other lightbox cards (non active)
+          else {
+            let leftBtn = arrayElements.childNodes[0];
+            let rightBtn = arrayElements.childNodes[2];
+            let mediaCardLightbox =
+              arrayElements.childNodes[1].childNodes[0].childNodes[0];
+            let captionMedia = arrayElements.childNodes[1].childNodes[1];
+
             // Remove class active for cards non actives
-            arrayCard.classList.remove("lightbox_card--active");
-            arrayCard.setAttribute("aria-hidden", "true");
+            arrayElements.classList.remove("lightbox_card--active");
+            arrayElements.setAttribute("aria-hidden", "true");
             // Change tabindex for elements in cards non active
-            arrayCard.setAttribute("tabindex", "-1");
-            mediaLightbox.setAttribute("tabindex", "-1");
+            arrayElements.setAttribute("tabindex", "-1");
+            mediaCardLightbox.setAttribute("tabindex", "-1");
             captionMedia.setAttribute("tabindex", "-1");
             leftBtn.setAttribute("tabindex", "-1");
             rightBtn.setAttribute("tabindex", "-1");
           }
         }
 
-        // Call active media card lightbox on events
-        for (let i = 0; i < arrayCardsLightbox.length; i++) {
-          let currentCardLightbox = arrayCardsLightbox[i];
-          const imagesGallery = document.querySelectorAll(".images-gallery");
+        // --------------------------------- Function for nav buttons //
+        // ------------------------------------------------ ********* //
 
-          imagesGallery.forEach((imageGallery) => {
-            imageGallery.addEventListener("click", () => {
-              openLightboxActiveMedia(imageGallery, currentCardLightbox);
-            });
-            imageGallery.addEventListener("keydown", (e) => {
-              if (e.code === "Enter") {
-                openLightboxActiveMedia(imageGallery, currentCardLightbox);
-              }
-            });
-          });
-        }
-
-        // --------------- Function for nav buttons -------------- //
-        // ------------------------------------------------------- //
-
+        // Disable left/right button for first/last lightbox card
         arrayLeftButtons[0].classList.add("disabled");
         arrayRightButtons[arrayRightButtons.length - 1].classList.add(
           "disabled"
@@ -493,36 +494,25 @@ function getPhotographer() {
               arrayCardsLightbox[i]
             );
             let indexCurrentButton = ArrBtn.indexOf(ArrBtn[i]);
+            // Change display active card on event nav button
             function eventNavBtns() {
               if (indexCurrentCard === indexCurrentButton) {
                 currentCard.classList.remove("lightbox_card--active");
                 nextCard.classList.add("lightbox_card--active");
-
-                let mediaLightbox =
-                  nextCard.childNodes[1].childNodes[0].childNodes[0];
-                let captionMedia = nextCard.childNodes[1].childNodes[1];
-                let leftBtn = nextCard.childNodes[0];
-                let rightBtn = nextCard.childNodes[2];
-
-                arrayFocusLightbox.forEach((focusLightbox) => {
-                  focusLightbox.setAttribute("tabindex", "-1");
-                });
-
-                arrayFocusLightbox.length = 0;
-                arrayFocusLightbox.push(nextCard);
-                arrayFocusLightbox.push(mediaLightbox);
-                arrayFocusLightbox.push(captionMedia);
-                arrayFocusLightbox.push(leftBtn);
-                arrayFocusLightbox.push(rightBtn);
-
+                // Reset and construct new array containing elements focused in active card
+                removeTabindexPage(arrayActiveFocusLightbox);
+                arrayActiveFocusLightbox.length = 0;
+                getArrayActiveLightbox(nextCard);
+                // Add tabindex for elements focused in new active card
                 let x = 0;
-                while (x < arrayFocusLightbox.length) {
-                  arrayFocusLightbox[x].setAttribute("tabindex", x + 1);
+                while (x < arrayActiveFocusLightbox.length) {
+                  arrayActiveFocusLightbox[x].setAttribute("tabindex", x + 1);
                   x++;
                 }
                 nextCard.focus();
               }
             }
+            // Events for navs buttons (mouse and key)
             currentButton.addEventListener("click", () => {
               eventNavBtns();
             });
@@ -534,18 +524,50 @@ function getPhotographer() {
           }
         }
 
-        // Nav with left button
-        navPreviousNext(1, arrayLeftButtons, -1, "ArrowLeft");
-        // Nav with right button
-        navPreviousNext(0, arrayRightButtons, 1, "ArrowRight");
+        // ---------------------------- Function open lightbox modale //
+        // ------------------------------------------------ ********* //
 
-        // ------------------ Event close lightbox --------------- //
-        // ------------------------------------------------------- //
+        function openLightboxActiveMedia() {
+          // Display modale lightbox
+          lightboxModal.style.display = "block";
+          pageHeader.style.display = "none";
+          body.style.overflow = "hidden";
+        }
+
+        // -------------------------------------------- Open lightbox //
+        // ------------------------------------------------ ********* //
+
+        // Call active media card lightbox on events
+        for (let i = 0; i < arrayCardsLightbox.length; i++) {
+          let currentCardLightbox = arrayCardsLightbox[i];
+
+          imagesGallery.forEach((imageGallery) => {
+            imageGallery.addEventListener("click", () => {
+              openLightboxActiveMedia();
+              addTabindexLightbox(imageGallery, currentCardLightbox);
+              // Nav with left button
+              navPreviousNext(1, arrayLeftButtons, -1, "ArrowLeft");
+              // Nav with right button
+              navPreviousNext(0, arrayRightButtons, 1, "ArrowRight");
+            });
+            imageGallery.addEventListener("keydown", (e) => {
+              if (e.code === "Enter") {
+                openLightboxActiveMedia();
+                addTabindexLightbox(imageGallery, currentCardLightbox);
+                // Nav with left button
+                navPreviousNext(1, arrayLeftButtons, -1, "ArrowLeft");
+                // Nav with right button
+                navPreviousNext(0, arrayRightButtons, 1, "ArrowRight");
+              }
+            });
+          });
+        }
+
+        // --------------------------------- Close lightbox on events //
+        // ------------------------------------------------ ********* //
 
         async function closeLightbox() {
           lightboxModalButton.addEventListener("click", () => {
-            const pageHeader = document.querySelector(".page-header");
-            const main = document.querySelector("main");
             getTabindexPage();
             addTabindexImgGallery();
             select.focus();
@@ -554,17 +576,17 @@ function getPhotographer() {
             main.setAttribute("aria-hidden", "false");
             lightboxModal.style.display = "none";
             body.style.overflow = "auto";
-            arrayFocusLightbox.length = 0;
+            arrayActiveFocusLightbox.length = 0;
           });
         }
         closeLightbox();
       }
 
-      getLightbox();
+      generateLightbox();
 
-      // -------------------------------------------------------------------------- //
+      // ************************************************************************** //
       // ---------------------------- SORTING EVENTS ------------------------------ //
-      // -------------------------------------------------------------------------- //
+      // ************************************************************************** //
 
       async function sortingFilter() {
         sortingSelect.addEventListener("change", () => {
@@ -575,9 +597,9 @@ function getPhotographer() {
             photographMedias = photographMedias.sort(
               (a, b) => a.likes - b.likes
             );
-            addCssOrder();
-            addTabindexImgGallery();
-            getLightbox(); // Display lightbox
+            addCssOrder(); // Change CSS order of flexbox containers
+            addTabindexImgGallery(); // Change tabindex for images gallery
+            generateLightbox(); // Generate new lightbox sorted
           }
           if (optionDate.selected == true) {
             optionPopularite.selected = false;
@@ -589,9 +611,9 @@ function getPhotographer() {
               return dateA - dateB;
             }
             photographMedias = photographMedias.sort(dateSorting);
-            addCssOrder();
-            addTabindexImgGallery();
-            getLightbox(); // Display lightbox
+            addCssOrder(); // Change CSS order of flexbox containers
+            addTabindexImgGallery(); // Change tabindex for images gallery
+            generateLightbox(); // Generate new lightbox sorted
           }
           if (optionTitle.selected == true) {
             optionPopularite.selected = false;
@@ -600,9 +622,9 @@ function getPhotographer() {
             photographMedias = photographMedias.sort((a, b) =>
               a.title.localeCompare(b.title)
             );
-            addCssOrder();
-            addTabindexImgGallery();
-            getLightbox(); // Display lightbox
+            addCssOrder(); // Change CSS order of flexbox containers
+            addTabindexImgGallery(); // Change tabindex for images gallery
+            generateLightbox(); // Generate new lightbox sorted
           }
         });
         return photographMedias;
@@ -610,11 +632,11 @@ function getPhotographer() {
       sortingFilter();
     })
 
-    // -------------------------------------------------------------------------- //
-    // ------------------- MESSAGE DISPLAYED IF ERROR LOADING ------------------- //
-    // -------------------------------------------------------------------------- //
+    //******************************************************************************* //
+    // --------------------- MESSAGE DISPLAYED IF ERROR LOADING --------------------- //
+    //******************************************************************************* //
 
-    .catch(function (error) {
+    .catch((error) => {
       main.innerHTML +=
         "<p>Erreur de chargement des données</p><p>" + error.message + "</p>";
     });

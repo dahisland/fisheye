@@ -1,3 +1,7 @@
+//********************************************************************************** //
+// ------------------------------------ VARIABLES ---------------------------------- //
+//********************************************************************************** //
+
 const modal = document.getElementById("contact_modal");
 const modalContent = document.querySelector(".modal");
 const btnSubmit = document.querySelector("#submit-button");
@@ -15,13 +19,18 @@ const body = document.querySelector("body");
 const pageHeader = document.querySelector(".page-header");
 const main = document.querySelector("main");
 
-// Regex
+// ---------------------------------------------------- Regex //
+// ------------------------------------------------ ********* //
+
 const regexText =
   /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ,\'\.\s-]{2,50}$/g;
 const regexEmail =
   /^([\w/\_\\!#$%&£'\]\[*+=?^`{|}~"()\.,:;<>@-]{1,}[\@][a-zA-Z]{1,}[\.][a-zA-Z]{2,})$/;
 
-//------------------------------------------ TITLE FOR MODAL
+//********************************************************************************** //
+// -------------------------- DISPLAY PERSONNALISED TITLE -------------------------- //
+//********************************************************************************** //
+
 function formContactTitle(data) {
   const { name } = data;
   const titleModal = document.getElementById("modal-title");
@@ -32,7 +41,10 @@ function formContactTitle(data) {
   modalContent.setAttribute("aria-label", "Contact me " + name);
 }
 
-// Create element paragraph for message when submit succeed
+//********************************************************************************** //
+// ------------------------- CREATE MESSAGE SUCCEED SUBMIT ------------------------- //
+//********************************************************************************** //
+
 const pSubmit = document.createElement("p");
 pSubmit.setAttribute("id", "message-submit");
 pSubmit.setAttribute("aria-label", "send succeed");
@@ -41,7 +53,10 @@ pSubmit.innerHTML =
 modalContent.appendChild(pSubmit);
 const messageSubmit = document.querySelector("#message-submit");
 
-// Create containers for error messages
+//********************************************************************************** //
+// ----------------------- CREATE CONTAINER FOR ERROR MESSAGES --------------------- //
+//********************************************************************************** //
+
 inputs.forEach((input) => {
   const containerErrMessage = document.createElement("div");
   containerErrMessage.classList.add("error-data");
@@ -49,14 +64,22 @@ inputs.forEach((input) => {
   containerErrMessage.style.display = "none";
 });
 
-// Variables for each message error
+// ------------------------  Variables for each message error //
+// ------------------------------------------------ ********* //
+
 const errorDatas = document.querySelectorAll(".error-data");
 const errorFirstname = errorDatas[0];
 const errorLastname = errorDatas[1];
 const errorEmail = errorDatas[2];
 const errorTextarea = errorDatas[3];
 
-// Functions to open/close modal
+//********************************************************************************** //
+// --------------------------- FUNCTIONS OPEN/CLOSE MODALE ------------------------- //
+//********************************************************************************** //
+
+// ---------------------------------------------- Open modale //
+// ------------------------------------------------ ********* //
+
 function displayModal() {
   modal.style.display = "block";
   contactForm.style.display = "block";
@@ -84,6 +107,9 @@ function closeModal() {
   pageHeader.style.display = "flex";
 }
 
+// --------------------------------------------- Close modale //
+// ------------------------------------------------ ********* //
+
 closeContactModal.addEventListener("keydown", (e) => {
   e.preventDefault();
   if (e.code == "Tab") {
@@ -94,7 +120,13 @@ closeContactModal.addEventListener("keydown", (e) => {
   }
 });
 
-// Function for validation form inputs
+//********************************************************************************** //
+// -------------------------- FUNCTIONS FOR VALIDATION FORM ------------------------ //
+//********************************************************************************** //
+
+// ---------------------------------------- Validation inputs //
+// ------------------------------------------------ ********* //
+
 function validateInputs(inputReference, label, errorReference, regex) {
   errorReference.style.display = "block";
   if (
@@ -114,7 +146,9 @@ function validateInputs(inputReference, label, errorReference, regex) {
     return true;
   }
 }
-// Function for validation textarea
+// -------------------------------------- Validation textarea //
+// ------------------------------------------------ ********* //
+
 function validateTextarea() {
   errorTextarea.style.display = "block";
   if (textarea.value.length < 10 || textarea.value.length > 400) {
@@ -131,7 +165,10 @@ function validateTextarea() {
   }
 }
 
-// Validation form on submit
+//********************************************************************************** //
+// ---------------------------- ON SUBMIT VALIDATION EVENT ------------------------- //
+//********************************************************************************** //
+
 contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
   validateInputs(inputFirstname, "prénom", errorFirstname, regexText);

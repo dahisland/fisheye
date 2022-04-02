@@ -1,9 +1,18 @@
-function cardsFactory(data) {
-  const { name, portrait, city, country, tagline, price, id } = data;
+//********************************************************************************** //
+// -------------------------- CARDS FACTORY (for page index) ----------------------- //
+//********************************************************************************** //
 
+function cardsFactory(data) {
+  // ------------------------------------------------ Variables //
+  // ------------------------------------------------ ********* //
+
+  const { name, portrait, city, country, tagline, price, id } = data; // Destructuring
   const picture = `./assets/photographers/${portrait}`;
 
   function getUserCardDOM() {
+    // ---------------------------------------- Create elements //
+    // ---------------------------------------------- ********* //
+
     // Card container
     const article = document.createElement("article");
     // Container link
@@ -34,7 +43,10 @@ function cardsFactory(data) {
     const pPrice = document.createElement("p");
     pPrice.classList.add("p_price");
     pPrice.textContent = price + "€/jour";
-    // appendChild
+
+    // ------------------------------------------- Append child //
+    // ---------------------------------------------- ********* //
+
     article.appendChild(linkPhotographer);
     linkPhotographer.appendChild(img);
     linkPhotographer.appendChild(h2);
@@ -45,7 +57,6 @@ function cardsFactory(data) {
     return article;
   }
   return { getUserCardDOM };
-  // return { name, picture, getUserCardDOM };
 }
 
 export { cardsFactory };

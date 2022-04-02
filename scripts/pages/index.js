@@ -57,6 +57,7 @@ function getPhotographers() {
     // **************************************************************************** //
 
     .catch(function (error) {
+      const main = document.querySelector("main");
       main.innerHTML +=
         "<p>Erreur de chargement des données</p><p>" + error.message + "</p>";
     });

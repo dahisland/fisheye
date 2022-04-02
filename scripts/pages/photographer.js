@@ -21,6 +21,7 @@ function getPhotographer() {
       // Variables for JSON datas
       const photographers = json.photographers;
       let medias = json.medias.sort((a, b) => a.likes - b.likes);
+      const body = document.querySelector("body");
       // Variables for sorting <select>
       const sortingSelect = document.querySelector("#sorting-label");
       const optionPopularite = document.querySelector("#option-popularite");
@@ -38,6 +39,7 @@ function getPhotographer() {
           if (photographer.id == idUrlParam) {
             const photographerModel = profile.profileFactory(photographer);
             photographerModel.getUserProfileDOM();
+            // eslint-disable-next-line no-undef
             formContactTitle(photographer);
           }
         });
@@ -495,6 +497,7 @@ function getPhotographer() {
             );
             let indexCurrentButton = ArrBtn.indexOf(ArrBtn[i]);
             // Change display active card on event nav button
+            // eslint-disable-next-line no-inner-declarations
             function eventNavBtns() {
               if (indexCurrentCard === indexCurrentButton) {
                 currentCard.classList.remove("lightbox_card--active");
@@ -587,7 +590,11 @@ function getPhotographer() {
       // ************************************************************************** //
       // ---------------------------- SORTING EVENTS ------------------------------ //
       // ************************************************************************** //
-
+      function dateSorting(a, b) {
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+        return dateA - dateB;
+      }
       async function sortingFilter() {
         sortingSelect.addEventListener("change", () => {
           if (optionPopularite.selected == true) {
@@ -605,11 +612,6 @@ function getPhotographer() {
             optionPopularite.selected = false;
             optionTitle.selected = false;
             lightboxCard.innerHTML = ""; // Clear lightbox container
-            function dateSorting(a, b) {
-              const dateA = new Date(a.date);
-              const dateB = new Date(b.date);
-              return dateA - dateB;
-            }
             photographMedias = photographMedias.sort(dateSorting);
             addCssOrder(); // Change CSS order of flexbox containers
             addTabindexImgGallery(); // Change tabindex for images gallery
@@ -637,6 +639,7 @@ function getPhotographer() {
     //******************************************************************************* //
 
     .catch((error) => {
+      const main = document.querySelector("main");
       main.innerHTML +=
         "<p>Erreur de chargement des données</p><p>" + error.message + "</p>";
     });

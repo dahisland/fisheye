@@ -4,11 +4,9 @@
 
 const modal = document.getElementById("contact_modal");
 const modalContent = document.querySelector(".modal");
-const btnSubmit = document.querySelector("#submit-button");
 const contactForm = document.querySelector("#contact-form");
 const contactButton = document.querySelector(".contact_button");
 const closeContactModal = document.querySelector(".modal > header > img");
-const titleContactModal = document.querySelector(".modal > header > h2");
 const inputsContainer = document.querySelector("#form-inputs");
 const inputFirstname = document.querySelector("#firstname");
 const inputLastname = document.querySelector("#lastname");
@@ -23,14 +21,16 @@ const main = document.querySelector("main");
 // ------------------------------------------------ ********* //
 
 const regexText =
-  /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ,\'\.\s-]{2,50}$/g;
+  /^[a-zA-ZàèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ,.'\s-]{2,50}$/g;
 const regexEmail =
+  // eslint-disable-next-line no-useless-escape
   /^([\w/\_\\!#$%&£'\]\[*+=?^`{|}~"()\.,:;<>@-]{1,}[\@][a-zA-Z]{1,}[\.][a-zA-Z]{2,})$/;
 
 //********************************************************************************** //
 // -------------------------- DISPLAY PERSONNALISED TITLE -------------------------- //
 //********************************************************************************** //
 
+// eslint-disable-next-line no-unused-vars
 function formContactTitle(data) {
   const { name } = data;
   const titleModal = document.getElementById("modal-title");
@@ -80,6 +80,7 @@ const errorTextarea = errorDatas[3];
 // ---------------------------------------------- Open modale //
 // ------------------------------------------------ ********* //
 
+// eslint-disable-next-line no-unused-vars
 function displayModal() {
   modal.style.display = "block";
   contactForm.style.display = "block";

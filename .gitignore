@@ -1,2 +1,5 @@
 # VSCODE SETTINGS
 /.vscode
+
+# ESLINT NODE_MODULES
+/node_modules

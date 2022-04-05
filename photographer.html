@@ -39,7 +39,7 @@
     <main id="main" aria-hidden="false">
       <!-- ***************** SECTION PHOTOGRAPHER PROFILE ***************** -->
 
-      <section class="photograph-header">
+      <div class="photograph-header">
         <button
           class="contact_button"
           aria-label="Contact me"
@@ -47,11 +47,11 @@
         >
           Contactez-moi
         </button>
-      </section>
+      </div>
 
       <!-- ***************** SECTION GALLERY PHOTOGRAPHER ***************** -->
 
-      <section class="photograph-gallery">
+      <div class="photograph-gallery">
         <!-- sorting filter -->
         <form class="gallery-sorting">
           <label for="sorting-label">Trier par :</label>
@@ -82,7 +82,7 @@
         </form>
         <!-- images gallery -->
         <div class="gallery-cards"></div>
-      </section>
+      </div>
     </main>
 
     <!-- **************************** MODALES *************************** -->
@@ -96,8 +96,8 @@
       ></div>
     </div>
     <!-- Form contact -->
-    <div id="contact_modal" role="dialog">
-      <div class="modal" aria-label="form contact" tabindex="1">
+    <div id="contact_modal">
+      <div class="modal" role="dialog" aria-label="form contact" tabindex="1">
         <header>
           <h2 id="modal-title" tabindex="2">Contactez-moi</h2>
           <img

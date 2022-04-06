@@ -364,6 +364,12 @@ aside p {
   color: white;
   margin-top: 50px;
 }
+.modal #message-submit:focus {
+  border: none;
+  outline: 2px solid #901c1c;
+  outline-offset: 5px;
+}
+
 .modal #submit-button {
   width: fit-content;
   padding: 10px 30px;

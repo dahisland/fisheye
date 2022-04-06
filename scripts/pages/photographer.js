@@ -49,13 +49,14 @@ function getPhotographer() {
       // ************************************************************************** //
       // ----------- DISPLAY PHOTOGRAPHER ASIDE (TOTAL LIKES & PRICE) ------------- //
       // ************************************************************************** //
-
+      let asidePrice = [];
       async function photographerAside() {
         photographers.forEach((photographer) => {
           if (photographer.id == idUrlParam) {
             const asideModel = asideLikes.asideFactory(photographer);
             const cardAside = asideModel.getAsideDOM();
             main.appendChild(cardAside);
+            asidePrice.push(photographer.price);
           }
         });
       }
@@ -70,6 +71,8 @@ function getPhotographer() {
       photographMedias = photographMedias.sort((a, b) => a.likes - b.likes);
       // Variable <p> containing total likes photographer
       const totalLikesContainer = document.querySelector(".total-likes");
+      // Variable for aside container
+      const aside = document.querySelector("aside");
 
       // ************************************************************************** //
       // ----------------- DISPLAY SECTION PHOTOGRAPHER GALLERY ------------------- //
@@ -105,6 +108,11 @@ function getPhotographer() {
         let sumLikes = 0;
         for (let i = 0; i < photographMedias.length; i++) {
           sumLikes += photographMedias[i].likes;
+          aside.setAttribute(
+            "aria-label",
+            ` Popularité:
+            ${sumLikes} likes, Prix: ${asidePrice[0]}€ par jour`
+          );
         }
         totalLikesContainer.innerHTML =
           sumLikes + ' <span class="fas fa-heart"></span>';
@@ -126,11 +134,13 @@ function getPhotographer() {
             if (statutLike == false) {
               photographMedia.likes = likesMedia + 1;
               containerLike.firstChild.classList.add("number-likes");
+              containerLike.setAttribute("aria-checked", "true");
               statutLike = true;
               containerLike.firstChild.innerHTML = photographMedia.likes + " ";
             } else {
               photographMedia.likes = likesMedia - 1;
               containerLike.firstChild.classList.remove("number-likes");
+              containerLike.setAttribute("aria-checked", "false");
               statutLike = false;
               containerLike.firstChild.innerHTML = photographMedia.likes + " ";
             }
@@ -171,8 +181,6 @@ function getPhotographer() {
       // Variables for contact form
       const contactButton = document.querySelector(".contact_button");
       const closeContactModal = document.querySelector(".modal > header > img");
-      // Variable for aside container
-      const aside = document.querySelector("aside");
       // Variables for sorting filter
       const sortingLabel = document.querySelector(".gallery-sorting > label");
       const select = document.querySelector("#sorting-label");
@@ -501,7 +509,9 @@ function getPhotographer() {
             function eventNavBtns() {
               if (indexCurrentCard === indexCurrentButton) {
                 currentCard.classList.remove("lightbox_card--active");
+                currentCard.setAttribute("aria-hidden", "true");
                 nextCard.classList.add("lightbox_card--active");
+                nextCard.setAttribute("aria-hidden", "false");
                 // Reset and construct new array containing elements focused in active card
                 removeTabindexPage(arrayActiveFocusLightbox);
                 arrayActiveFocusLightbox.length = 0;

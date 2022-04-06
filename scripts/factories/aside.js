@@ -12,10 +12,9 @@ function asideFactory(data) {
     // ---------------------------------------------- ********* //
 
     const aside = document.createElement("aside");
-    aside.setAttribute("aria-label", "popularity and rate");
     // container for price
     const pricePhotographer = document.createElement("p");
-    pricePhotographer.classList.add("price-photographer");
+    pricePhotographer.setAttribute("aria-label", "price");
     pricePhotographer.innerHTML = price + "€/jour";
     // Container for total likes
     const totalLikesPhotographer = document.createElement("p");

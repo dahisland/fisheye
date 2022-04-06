@@ -28,13 +28,16 @@ function galleryFactory(data) {
     const figcaption = document.createElement("figcaption");
     // Container for media title
     const titlePhoto = document.createElement("p");
+    titlePhoto.setAttribute("aria-label", title);
     titlePhoto.classList.add("title-photo");
     titlePhoto.textContent = title;
     // Container for likes
     const likePhoto = document.createElement("a");
     likePhoto.setAttribute("href", "#");
     likePhoto.setAttribute("id", "likes" + id);
-    likePhoto.setAttribute("aria-label", "likes");
+    likePhoto.setAttribute("aria-label", "like this image");
+    likePhoto.setAttribute("role", "checkbox");
+    likePhoto.setAttribute("aria-checked", "false");
     likePhoto.innerHTML =
       '<span class="text-likes">' +
       likes +

@@ -48,6 +48,7 @@ function formContactTitle(data) {
 const pSubmit = document.createElement("p");
 pSubmit.setAttribute("id", "message-submit");
 pSubmit.setAttribute("aria-label", "send succeed");
+pSubmit.setAttribute("tabindex", "3");
 pSubmit.innerHTML =
   "Votre message a bien été envoyé !<br>Nous vous recontacterons dès que possible.";
 modalContent.appendChild(pSubmit);
@@ -136,12 +137,14 @@ function validateInputs(inputReference, label, errorReference, regex) {
     !inputReference.value.match(regex)
   ) {
     errorReference.style.color = "#901c1c";
+    errorReference.setAttribute("aria-invalid", "true");
     errorReference.innerHTML =
       "* Veuillez indiquer un " + label + " valide (requis)";
     inputReference.style.outline = "2px solid red";
     return false;
   } else {
     errorReference.style.color = "green";
+    errorReference.setAttribute("aria-invalid", "false");
     errorReference.innerHTML = '<span class="fa fa-check"></span>';
     inputReference.style.outline = "none";
     return true;
@@ -154,12 +157,14 @@ function validateTextarea() {
   errorTextarea.style.display = "block";
   if (textarea.value.length < 10 || textarea.value.length > 400) {
     errorTextarea.style.color = "#901c1c";
+    errorTextarea.setAttribute("aria-invalid", "true");
     errorTextarea.innerHTML =
       "* Veuillez laisser un message (min 10 caractères, max 400)";
     textarea.style.outline = "2px solid red";
     return false;
   } else {
     errorTextarea.style.color = "green";
+    errorTextarea.setAttribute("aria-invalid", "false");
     errorTextarea.innerHTML = '<span class="fa fa-check"></span>';
     textarea.style.outline = "none";
     return true;

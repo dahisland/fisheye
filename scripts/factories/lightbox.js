@@ -40,6 +40,7 @@ function lightboxFactory(data) {
     // Figcaption
     const figcaption = document.createElement("figcaption");
     figcaption.setAttribute("tabindex", "-1");
+    figcaption.setAttribute("aria-label", title);
     figcaption.innerHTML = title;
     // Media
     if (video !== undefined) {

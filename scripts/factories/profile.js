@@ -24,6 +24,10 @@ function profileFactory(data) {
     namePhotographer.textContent = name;
     // Localisation photographer
     const identityInfo = document.createElement("div");
+    identityInfo.setAttribute(
+      "aria-label",
+      city + ", " + country + ", " + tagline
+    );
     const pLocalisation = document.createElement("p");
     pLocalisation.classList.add("p_localisation");
     pLocalisation.textContent = city + ", " + country;

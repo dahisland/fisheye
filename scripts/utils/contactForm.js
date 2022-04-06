@@ -121,6 +121,11 @@ closeContactModal.addEventListener("keydown", (e) => {
     closeModal();
   }
 });
+modal.addEventListener("keydown", (e) => {
+  if (e.code == "Escape") {
+    closeModal();
+  }
+});
 
 //********************************************************************************** //
 // -------------------------- FUNCTIONS FOR VALIDATION FORM ------------------------ //

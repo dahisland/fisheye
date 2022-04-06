@@ -580,19 +580,25 @@ function getPhotographer() {
         // ------------------------------------------------ ********* //
 
         async function closeLightbox() {
-          lightboxModalButton.addEventListener("click", () => {
-            getTabindexPage();
-            addTabindexImgGallery();
-            select.focus();
-            pageHeader.setAttribute("aria-hidden", "false");
-            pageHeader.style.display = "flex";
-            main.setAttribute("aria-hidden", "false");
-            lightboxModal.style.display = "none";
-            body.style.overflow = "auto";
-            arrayActiveFocusLightbox.length = 0;
-          });
+          getTabindexPage();
+          addTabindexImgGallery();
+          select.focus();
+          pageHeader.setAttribute("aria-hidden", "false");
+          pageHeader.style.display = "flex";
+          main.setAttribute("aria-hidden", "false");
+          lightboxModal.style.display = "none";
+          body.style.overflow = "auto";
+          arrayActiveFocusLightbox.length = 0;
         }
-        closeLightbox();
+
+        lightboxModalButton.addEventListener("click", () => {
+          closeLightbox();
+        });
+        lightboxModal.addEventListener("keydown", (e) => {
+          if (e.code == "Escape") {
+            closeLightbox();
+          }
+        });
       }
 
       generateLightbox();

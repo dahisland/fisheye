@@ -25,14 +25,14 @@ function lightboxFactory(data) {
     beforeButton.setAttribute("tabindex", "-1");
     beforeButton.classList.add("left-button");
     beforeButton.setAttribute("href", "#");
-    beforeButton.setAttribute("aria-label", "previous image");
+    beforeButton.setAttribute("aria-label", "Image précédente");
     beforeButton.innerHTML = '<span class="fas fa-angle-left"></span>';
     // Next button nav
     const nextButton = document.createElement("a");
     nextButton.setAttribute("tabindex", "-1");
     nextButton.classList.add("right-button");
     nextButton.setAttribute("href", "#");
-    nextButton.setAttribute("aria-label", "next image");
+    nextButton.setAttribute("aria-label", "Image suivante");
     nextButton.innerHTML = '<span class="fas fa-angle-right"></span>';
     // Container figure for media & caption
     const figure = document.createElement("figure");

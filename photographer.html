@@ -42,7 +42,7 @@
       <div class="photograph-header">
         <button
           class="contact_button"
-          aria-label="Contact me"
+          aria-label="Contactez-moi"
           onclick="displayModal()"
         >
           Contactez-moi
@@ -55,7 +55,7 @@
         <!-- sorting filter -->
         <form class="gallery-sorting">
           <label for="sorting-label">Trier par :</label>
-          <select name="tri" id="sorting-label" aria-label="Order by" size="1">
+          <select name="tri" id="sorting-label" aria-label="Trier par" size="1">
             <option
               value="popularite"
               id="option-popularite"
@@ -92,12 +92,17 @@
       <div
         class="lightbox_card"
         role="dialog"
-        aria-label="image closeup view"
+        aria-label="Image vue agrandie"
       ></div>
     </div>
     <!-- Form contact -->
     <div id="contact_modal">
-      <div class="modal" role="dialog" aria-label="form contact" tabindex="1">
+      <div
+        class="modal"
+        role="dialog"
+        aria-label="Formulaire de contact"
+        tabindex="1"
+      >
         <header>
           <h2 id="modal-title" tabindex="2">Contactez-moi</h2>
           <img
@@ -154,7 +159,12 @@
               tabindex="10"
             ></textarea>
           </div>
-          <button id="submit-button" aria-label="send" tabindex="11">
+          <button
+            id="submit-button"
+            type="submit"
+            aria-label="Envoyer"
+            tabindex="11"
+          >
             Envoyer
           </button>
         </form>

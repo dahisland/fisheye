@@ -346,7 +346,7 @@ function getPhotographer() {
 
         // Create Button close modale lightbox
         const lightboxModalButton = document.createElement("button");
-        lightboxModalButton.setAttribute("aria-label", "close dialog");
+        lightboxModalButton.setAttribute("aria-label", "Fermer lightbox");
         lightboxModalButton.setAttribute("tabindex", "-1");
         const lightboxButtonImg = document.createElement("img");
         lightboxButtonImg.setAttribute("src", "./assets/icons/close_brown.svg");
@@ -462,7 +462,7 @@ function getPhotographer() {
             arrayElements.classList.add("lightbox_card--active");
             // Add ARIA's
             arrayElements.setAttribute("aria-hidden", "false");
-            arrayElements.setAttribute("aria-label", "closeup view");
+            arrayElements.setAttribute("aria-label", "Vue agrandie");
             // Place focus on card active
             arrayElements.focus();
           }

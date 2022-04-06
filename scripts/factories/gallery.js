@@ -21,7 +21,7 @@ function galleryFactory(data) {
     photo.setAttribute("src", mediaPhoto);
     photo.setAttribute("alt", title);
     photo.setAttribute("role", "link");
-    photo.setAttribute("aria-label", title + ", closeup view");
+    photo.setAttribute("aria-label", title + ", Agrandir l'image");
     photo.setAttribute("data-id", id);
     photo.classList.add("images-gallery");
     // Figaption
@@ -35,7 +35,7 @@ function galleryFactory(data) {
     const likePhoto = document.createElement("a");
     likePhoto.setAttribute("href", "#");
     likePhoto.setAttribute("id", "likes" + id);
-    likePhoto.setAttribute("aria-label", "like this image");
+    likePhoto.setAttribute("aria-label", "Aimer cette image");
     likePhoto.setAttribute("role", "checkbox");
     likePhoto.setAttribute("aria-checked", "false");
     likePhoto.innerHTML =

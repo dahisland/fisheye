@@ -14,7 +14,6 @@ function asideFactory(data) {
     const aside = document.createElement("aside");
     // container for price
     const pricePhotographer = document.createElement("p");
-    pricePhotographer.setAttribute("aria-label", "price");
     pricePhotographer.innerHTML = price + "€/jour";
     // Container for total likes
     const totalLikesPhotographer = document.createElement("p");
